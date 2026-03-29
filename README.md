@@ -89,12 +89,12 @@ pnpm typecheck  # Type-check all projects
 
 Tasks are defined in `nx.json` and respect the project dependency graph:
 
-| Task        | Cache | Depends On       |
-|-------------|-------|------------------|
-| `build`     | Yes   | `^build` (deps)  |
-| `typecheck` | Yes   | `^typecheck`     |
-| `lint`      | Yes   | —                |
-| `test`      | Yes   | —                |
+| Task        | Cache | Depends On      |
+| ----------- | ----- | --------------- |
+| `build`     | Yes   | `^build` (deps) |
+| `typecheck` | Yes   | `^typecheck`    |
+| `lint`      | Yes   | —               |
+| `test`      | Yes   | —               |
 
 Run `pnpm nx graph` to visualize the full dependency graph.
 
@@ -110,11 +110,11 @@ import { userSchema } from '@mono/validation';
 
 ## Tech Stack
 
-| Layer      | Technology             |
-|------------|------------------------|
-| Monorepo   | Nx 22 + pnpm workspaces |
-| Web        | Next.js 16 (App Router) |
-| Mobile     | Expo 54 (React Native)  |
-| API        | NestJS 11               |
-| Language   | TypeScript 5.7          |
+| Layer      | Technology                   |
+| ---------- | ---------------------------- |
+| Monorepo   | Nx 22 + pnpm workspaces      |
+| Web        | Next.js 16 (App Router)      |
+| Mobile     | Expo 54 (React Native)       |
+| API        | NestJS 11                    |
+| Language   | TypeScript 5.7               |
 | Validation | Zod (via `@mono/validation`) |

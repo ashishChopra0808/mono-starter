@@ -1,0 +1,22 @@
+# Build outputs
+dist/
+out/
+build/
+.next/
+.expo/
+
+# Nx
+.nx/
+*.tsbuildinfo
+
+# Package manager
+node_modules/
+pnpm-lock.yaml
+
+# Generated assets
+apps/mobile/assets/
+coverage/
+
+# Config files that should not be reformatted
+*.min.js
+*.min.css

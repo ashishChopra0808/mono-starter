@@ -6,7 +6,7 @@ todos:
     content: Bootstrap Nx workspace with create-nx-workspace preset=apps and pnpm
     status: completed
   - id: install-plugins
-    content: "Install Nx plugins: @nx/next, @nx/expo, @nx/nest, @nx/js"
+    content: 'Install Nx plugins: @nx/next, @nx/expo, @nx/nest, @nx/js'
     status: completed
   - id: generate-apps
     content: Generate all four apps (web, admin, mobile, api) using Nx generators
@@ -24,7 +24,7 @@ todos:
     content: Configure nx.json task pipeline (build, lint, test, typecheck) with caching
     status: completed
   - id: root-scripts
-    content: "Set root package.json scripts: dev, build, lint, test, typecheck"
+    content: 'Set root package.json scripts: dev, build, lint, test, typecheck'
     status: completed
   - id: root-files
     content: Add .nvmrc, .editorconfig, .gitignore, README.md
@@ -71,16 +71,14 @@ graph TD
   ui_web & ui_mobile --> design_tokens & i18n
 ```
 
-
-
 ## Design Decisions
 
 - **Nx + pnpm workspaces** — Nx provides a task pipeline (caching, affected, etc.); pnpm ensures strict dependency isolation.
-- `**create-nx-workspace` preset=apps** — Lightest starting point; avoids opinionated defaults from heavier presets.
+- `**create-nx-workspace` preset=apps\*\* — Lightest starting point; avoids opinionated defaults from heavier presets.
 - **Nx generators for apps** — `@nx/next`, `@nx/expo`, `@nx/nest` generators produce correct project.json and tsconfig wiring automatically.
-- `**@nx/js:lib` generator for code packages** — Gives each package its own `tsconfig.json`, `src/index.ts` entry, and build target.
+- `**@nx/js:lib` generator for code packages\*\* — Gives each package its own `tsconfig.json`, `src/index.ts` entry, and build target.
 - **Config packages (config-eslint, config-typescript, config-prettier) scaffolded manually** — They are plain JS/JSON packages, not compiled libs.
-- `**tsconfig.base.json` path aliases at root** — All apps import packages via `@mono/types`, `@mono/utils`, etc. (scope: `@mono`).
+- `**tsconfig.base.json` path aliases at root\*\* — All apps import packages via `@mono/types`, `@mono/utils`, etc. (scope: `@mono`).
 
 ## File Structure
 
@@ -179,9 +177,9 @@ Add `@mono/*` entries pointing to each package's `src/index.ts`:
 ```json
 {
   "targetDefaults": {
-    "build":     { "dependsOn": ["^build"], "cache": true },
-    "lint":      { "cache": true },
-    "test":      { "cache": true },
+    "build": { "dependsOn": ["^build"], "cache": true },
+    "lint": { "cache": true },
+    "test": { "cache": true },
     "typecheck": { "dependsOn": ["^typecheck"], "cache": true }
   }
 }
@@ -192,10 +190,10 @@ Add `@mono/*` entries pointing to each package's `src/index.ts`:
 ```json
 {
   "scripts": {
-    "dev":       "nx run-many -t dev",
-    "build":     "nx run-many -t build",
-    "lint":      "nx run-many -t lint",
-    "test":      "nx run-many -t test",
+    "dev": "nx run-many -t dev",
+    "build": "nx run-many -t build",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
     "typecheck": "nx run-many -t typecheck"
   }
 }
@@ -215,4 +213,3 @@ Add `@mono/*` entries pointing to each package's `src/index.ts`:
 - `[tsconfig.base.json](tsconfig.base.json)` — all `@mono/*` path aliases
 - `[packages/config-typescript/](packages/config-typescript/)` — shared tsconfig presets for all apps
 - `[README.md](README.md)` — architecture overview and monorepo rationale
-
