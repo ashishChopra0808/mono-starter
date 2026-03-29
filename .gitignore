@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+.yarn/
+
+# Build outputs
+dist/
+out/
+build/
+
+# Next.js
+.next/
+
+# Expo
+.expo/
+web-build/
+
+# NestJS
+*.js.map
+
+# Nx
+.nx/cache
+.nx/workspace-data
+
+# TypeScript
+*.tsbuildinfo
+
+# Test output
+coverage/
+test-output/
+null
+
+# Debug logs
+npm-debug.*
+*.log
+
+# Native mobile
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

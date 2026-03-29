@@ -1,0 +1,12 @@
+{
+  "name": "@mono/config-prettier",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "peerDependencies": {
+    "prettier": ">=3.0.0"
+  }
+}

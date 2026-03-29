@@ -1,0 +1,67 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/web-e2e"
+    },
+    {
+      "path": "./apps/web"
+    },
+    {
+      "path": "./apps/admin-e2e"
+    },
+    {
+      "path": "./apps/admin"
+    },
+    {
+      "path": "./apps/mobile"
+    },
+    {
+      "path": "./apps/api-e2e"
+    },
+    {
+      "path": "./apps/api"
+    },
+    {
+      "path": "./packages/ui-web"
+    },
+    {
+      "path": "./packages/ui-mobile"
+    },
+    {
+      "path": "./packages/design-tokens"
+    },
+    {
+      "path": "./packages/i18n"
+    },
+    {
+      "path": "./packages/types"
+    },
+    {
+      "path": "./packages/validation"
+    },
+    {
+      "path": "./packages/utils"
+    },
+    {
+      "path": "./packages/auth"
+    },
+    {
+      "path": "./packages/db"
+    },
+    {
+      "path": "./packages/logger"
+    },
+    {
+      "path": "./packages/api-contracts"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/env"
+    }
+  ]
+}

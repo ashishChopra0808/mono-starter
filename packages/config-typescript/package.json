@@ -1,0 +1,11 @@
+{
+  "name": "@mono/config-typescript",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./base": "./base.json",
+    "./nextjs": "./nextjs.json",
+    "./nestjs": "./nestjs.json",
+    "./react-native": "./react-native.json"
+  }
+}
