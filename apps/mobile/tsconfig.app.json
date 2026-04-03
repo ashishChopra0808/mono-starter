@@ -28,6 +28,9 @@
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
   "references": [
     {
+      "path": "../../packages/design-tokens/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/env/tsconfig.lib.json"
     }
   ]

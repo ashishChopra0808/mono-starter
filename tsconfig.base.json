@@ -22,6 +22,8 @@
       "@mono/ui-web": ["packages/ui-web/src/index.ts"],
       "@mono/ui-mobile": ["packages/ui-mobile/src/index.ts"],
       "@mono/design-tokens": ["packages/design-tokens/src/index.ts"],
+      "@mono/design-tokens/css": ["packages/design-tokens/src/css.ts"],
+      "@mono/design-tokens/native": ["packages/design-tokens/src/native.ts"],
       "@mono/i18n": ["packages/i18n/src/index.ts"],
       "@mono/types": ["packages/types/src/index.ts"],
       "@mono/validation": ["packages/validation/src/index.ts"],

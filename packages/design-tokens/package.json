@@ -13,6 +13,18 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./css": {
+      "mono-starter": "./src/css.ts",
+      "types": "./dist/css.d.ts",
+      "import": "./dist/css.js",
+      "default": "./dist/css.js"
+    },
+    "./native": {
+      "mono-starter": "./src/native.ts",
+      "types": "./dist/native.d.ts",
+      "import": "./dist/native.js",
+      "default": "./dist/native.js"
     }
   },
   "dependencies": {
