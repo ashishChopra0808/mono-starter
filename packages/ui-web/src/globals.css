@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Layer ─────────────────────────────────────────────────────────── */
+/* Minimal resets. Design-token CSS custom properties (:root, [data-theme])  */
+/* are declared in each app's own global.css — NOT duplicated here.          */
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: theme('colors.border.DEFAULT');
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    tab-size: 4;
+  }
+
+  body {
+    font-family: theme('fontFamily.sans');
+    line-height: theme('lineHeight.normal');
+    color: theme('colors.foreground.DEFAULT');
+    background-color: theme('colors.background.DEFAULT');
+    margin: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, pre {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  button, input, textarea, select {
+    font: inherit;
+    color: inherit;
+  }
+
+  svg {
+    display: block;
+    vertical-align: middle;
+  }
+}

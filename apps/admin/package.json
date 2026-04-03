@@ -6,8 +6,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mono/ui-web": "workspace:*",
     "next": "~16.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@mono/config-tailwind": "workspace:*",
+    "tailwindcss": "^3.4.0",
+    "@tailwindcss/postcss": "^4.0.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
   }
 }
