@@ -31,7 +31,11 @@
       "@mono/logger": ["packages/logger/src/index.ts"],
       "@mono/api-contracts": ["packages/api-contracts/src/index.ts"],
       "@mono/core": ["packages/core/src/index.ts"],
-      "@mono/env": ["packages/env/src/index.ts"]
+      "@mono/env": ["packages/env/src/index.ts"],
+      "@mono/env/web": ["packages/env/src/web.ts"],
+      "@mono/env/admin": ["packages/env/src/admin.ts"],
+      "@mono/env/api": ["packages/env/src/api.ts"],
+      "@mono/env/mobile": ["packages/env/src/mobile.ts"]
     }
   }
 }

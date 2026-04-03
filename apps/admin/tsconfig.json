@@ -17,7 +17,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@mono/env/admin": ["packages/env/dist/admin.d.ts"]
     },
     "outDir": "dist",
     "rootDir": "src",
@@ -41,5 +42,10 @@
     "src/**/*.spec.ts",
     "src/**/*.test.ts",
     ".next"
+  ],
+  "references": [
+    {
+      "path": "../../packages/env"
+    }
   ]
 }

@@ -13,9 +13,36 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./web": {
+      "mono-starter": "./src/web.ts",
+      "types": "./dist/web.d.ts",
+      "import": "./dist/web.js",
+      "default": "./dist/web.js"
+    },
+    "./admin": {
+      "mono-starter": "./src/admin.ts",
+      "types": "./dist/admin.d.ts",
+      "import": "./dist/admin.js",
+      "default": "./dist/admin.js"
+    },
+    "./api": {
+      "mono-starter": "./src/api.ts",
+      "types": "./dist/api.d.ts",
+      "import": "./dist/api.js",
+      "default": "./dist/api.js"
+    },
+    "./mobile": {
+      "mono-starter": "./src/mobile.ts",
+      "types": "./dist/mobile.d.ts",
+      "import": "./dist/mobile.js",
+      "default": "./dist/mobile.js"
     }
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "@t3-oss/env-core": "^0.13.11",
+    "@t3-oss/env-nextjs": "^0.13.11",
+    "tslib": "^2.3.0",
+    "zod": "^4.3.6"
   }
 }

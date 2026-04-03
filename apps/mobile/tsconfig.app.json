@@ -6,7 +6,10 @@
     "rootDir": "src",
     "jsx": "react-jsx",
     "noUnusedLocals": false,
-    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
+    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
+    "paths": {
+      "@mono/env/mobile": ["packages/env/dist/mobile.d.ts"]
+    }
   },
   "files": ["../../node_modules/@nx/expo/typings/svg.d.ts"],
   "exclude": [
@@ -22,5 +25,10 @@
     "**/*.spec.jsx",
     "src/test-setup.ts"
   ],
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "references": [
+    {
+      "path": "../../packages/env/tsconfig.lib.json"
+    }
+  ]
 }
