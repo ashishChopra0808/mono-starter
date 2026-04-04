@@ -1,5 +1,5 @@
-import type { Theme } from '../types.js';
-import { colors } from '../tokens/colors.js';
+import type { Theme } from '../types';
+import { colors } from '../tokens/colors';
 
 // ─── Dark Theme ─────────────────────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-import type { TypographyTokens } from '../types.js';
+import type { TypographyTokens } from '../types';
 
 // ─── Typography Tokens ──────────────────────────────────────────────────────
 

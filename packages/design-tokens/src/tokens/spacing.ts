@@ -1,4 +1,4 @@
-import type { RadiusTokens, SpacingTokens } from '../types.js';
+import type { RadiusTokens, SpacingTokens } from '../types';
 
 // ─── Spacing Scale ──────────────────────────────────────────────────────────
 // Based on a 4px unit. Key = step number, value = px/rem value.

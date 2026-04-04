@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "@expo/metro-config": "*",
+    "@mono/design-tokens": "workspace:*",
+    "@mono/ui-mobile": "workspace:*",
     "@testing-library/react-native": "*",
     "expo": "*",
     "expo-splash-screen": "*",
@@ -18,6 +20,7 @@
     "metro-resolver": "*",
     "react": "*",
     "react-native": "*",
+    "react-native-safe-area-context": "*",
     "react-native-svg": "*",
     "react-native-svg-transformer": "*",
     "react-native-web": "*"

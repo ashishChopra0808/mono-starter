@@ -7,17 +7,17 @@
 //   import { themeToColors } from '@mono/design-tokens/native';
 
 // Types
-export type { SemanticColors, Theme, TypographyTokens, SpacingTokens, RadiusTokens } from './types.js';
+export type { SemanticColors, Theme, TypographyTokens, SpacingTokens, RadiusTokens } from './types';
 
 // Raw tokens
-export { colors } from './tokens/colors.js';
-export { typography } from './tokens/typography.js';
-export { spacing, radius } from './tokens/spacing.js';
+export { colors } from './tokens/colors';
+export { typography } from './tokens/typography';
+export { spacing, radius } from './tokens/spacing';
 
 // Themes
-export { lightTheme } from './themes/light.js';
-export { darkTheme } from './themes/dark.js';
-export { midnightTheme } from './themes/midnight.js';
+export { lightTheme } from './themes/light';
+export { darkTheme } from './themes/dark';
+export { midnightTheme } from './themes/midnight';
 
 // All themes as an array (convenience)
-export { allThemes, themeNames, type ThemeName } from './all-themes.js';
+export { allThemes, themeNames, type ThemeName } from './all-themes';

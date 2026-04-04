@@ -1,7 +1,7 @@
-import type { Theme } from './types.js';
-import { lightTheme } from './themes/light.js';
-import { darkTheme } from './themes/dark.js';
-import { midnightTheme } from './themes/midnight.js';
+import type { Theme } from './types';
+import { lightTheme } from './themes/light';
+import { darkTheme } from './themes/dark';
+import { midnightTheme } from './themes/midnight';
 
 // ─── All Themes ─────────────────────────────────────────────────────────────
 // Convenience array and type-safe theme name union.

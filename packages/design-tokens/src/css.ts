@@ -1,6 +1,6 @@
-import type { SemanticColors, Theme } from './types.js';
-import { typography } from './tokens/typography.js';
-import { spacing, radius } from './tokens/spacing.js';
+import type { SemanticColors, Theme } from './types';
+import { typography } from './tokens/typography';
+import { spacing, radius } from './tokens/spacing';
 
 // ─── CSS Custom Property Generation ─────────────────────────────────────────
 // Converts TypeScript theme objects into CSS custom properties.

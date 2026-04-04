@@ -1,4 +1,4 @@
-import type { Theme, SemanticColors } from './types.js';
+import type { Theme, SemanticColors } from './types';
 
 // ─── React Native Helpers ───────────────────────────────────────────────────
 // Provides theme values in a format compatible with RN StyleSheet.

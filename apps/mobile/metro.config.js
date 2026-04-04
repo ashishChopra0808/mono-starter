@@ -19,6 +19,21 @@ const customConfig = {
   resolver: {
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'cjs', 'mjs', 'svg'],
+    resolveRequest: (context, moduleName, platform) => {
+      if (moduleName.endsWith('.js') && moduleName.startsWith('.')) {
+        const tsName = moduleName.replace(/\.js$/, '.ts');
+        const tsxName = moduleName.replace(/\.js$/, '.tsx');
+        
+        try {
+          return context.resolveRequest(context, tsName, platform);
+        } catch (e) {
+          try {
+            return context.resolveRequest(context, tsxName, platform);
+          } catch (e2) {}
+        }
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    },
   },
 };
 
