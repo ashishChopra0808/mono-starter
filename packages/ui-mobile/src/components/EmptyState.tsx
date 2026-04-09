@@ -49,7 +49,11 @@ export function EmptyState({
   const { colors } = useTheme();
 
   return (
-    <View style={[styles.container, style]}>
+    <View
+      style={[styles.container, style]}
+      accessibilityRole="summary"
+      accessibilityLabel={description ? `${title}. ${description}` : title}
+    >
       {icon && <View style={styles.iconWrapper}>{icon}</View>}
 
       <Text style={[styles.title, { color: colors.foreground }]}>

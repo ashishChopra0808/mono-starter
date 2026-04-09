@@ -26,6 +26,8 @@ export interface CardProps {
   variant?: CardVariant;
   /** Makes the card pressable with opacity feedback. */
   onPress?: () => void;
+  /** Accessibility label announced by screen readers. */
+  accessibilityLabel?: string;
   /** Additional style overrides. */
   style?: ViewStyle;
 }
@@ -34,6 +36,7 @@ export function Card({
   children,
   variant = 'elevated',
   onPress,
+  accessibilityLabel,
   style,
 }: CardProps) {
   const { colors } = useTheme();
@@ -58,7 +61,10 @@ export function Card({
   };
 
   const content = (
-    <View style={[styles.card, variantStyles[variant], style]}>
+    <View
+      style={[styles.card, variantStyles[variant], style]}
+      accessibilityLabel={onPress ? undefined : accessibilityLabel}
+    >
       {children}
     </View>
   );
@@ -69,6 +75,7 @@ export function Card({
         onPress={onPress}
         style={({ pressed }) => pressed && styles.pressed}
         accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
       >
         {content}
       </Pressable>

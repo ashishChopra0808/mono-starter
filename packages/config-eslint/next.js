@@ -1,4 +1,5 @@
 import nextPlugin from '@next/eslint-plugin-next';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -12,6 +13,8 @@ export default tseslint.config(
   react.configs.flat.recommended,
   // React Hooks: enforce rules of hooks and exhaustive deps
   reactHooks.configs.flat.recommended,
+  // JSX accessibility: catches missing alt text, invalid ARIA, empty interactives
+  jsxA11y.flatConfigs.recommended,
   {
     plugins: {
       '@next/next': nextPlugin,

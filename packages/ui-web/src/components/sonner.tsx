@@ -18,10 +18,11 @@ type ToasterProps = React.ComponentProps<typeof SonnerToaster>;
  * import { toast } from '@mono/ui-web';
  * toast.success('Booking confirmed!');
  */
-function Toaster({ className, ...props }: ToasterProps) {
+function Toaster({ className, closeButton = true, ...props }: ToasterProps) {
   return (
     <SonnerToaster
       className={cn('toaster group', className)}
+      closeButton={closeButton}
       toastOptions={{
         classNames: {
           toast:

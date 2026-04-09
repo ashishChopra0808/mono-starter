@@ -55,6 +55,9 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
         )}
         <TextInput
           ref={ref}
+          accessibilityLabel={label}
+          accessibilityState={{ disabled }}
+          accessibilityHint={error ? `Error: ${error}` : undefined}
           {...inputProps}
           editable={!disabled}
           placeholderTextColor={colors['muted-foreground']}
@@ -68,8 +71,6 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(
             disabled && styles.disabled,
             inputStyle,
           ]}
-          accessibilityLabel={label}
-          accessibilityState={{ disabled }}
         />
         {error && (
           <Text style={[styles.error, { color: colors.destructive }]}>

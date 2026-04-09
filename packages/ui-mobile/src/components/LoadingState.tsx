@@ -34,7 +34,12 @@ export function LoadingState({
   const { colors } = useTheme();
 
   return (
-    <View style={[styles.container, style]} accessibilityRole="progressbar">
+    <View
+      style={[styles.container, style]}
+      accessibilityRole="progressbar"
+      accessibilityLabel={message ?? 'Loading'}
+      accessibilityLiveRegion="polite"
+    >
       <ActivityIndicator
         size={size === 'lg' ? 'large' : 'small'}
         color={colors.primary}

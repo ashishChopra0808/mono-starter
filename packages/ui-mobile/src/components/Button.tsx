@@ -96,8 +96,13 @@ export function Button({
   const sStyles = sizeStyles[size];
   const spinnerColor = vStyles.text.color as string;
 
+  const defaultLabel = typeof children === 'string' ? children : undefined;
+
   return (
     <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ disabled: isDisabled, busy: loading }}
+      accessibilityLabel={defaultLabel}
       {...pressableProps}
       disabled={isDisabled}
       style={({ pressed }) => [
@@ -108,8 +113,6 @@ export function Button({
         isDisabled && styles.disabled,
         style,
       ]}
-      accessibilityRole="button"
-      accessibilityState={{ disabled: isDisabled, busy: loading }}
     >
       {loading ? (
         <ActivityIndicator size="small" color={spinnerColor} />
