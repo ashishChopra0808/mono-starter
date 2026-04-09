@@ -1,6 +1,7 @@
 'use client';
 
 import { useTheme } from '../theme-provider';
+import { useTranslation } from '../i18n';
 import {
   Button,
   Card,
@@ -35,9 +36,10 @@ import {
 
 export default function Index() {
   const { theme, setTheme } = useTheme();
+  const { t, locale, setLocale, dir, supportedLocales } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground" dir={dir}>
       <Toaster position="top-right" />
 
       {/* ── Header ──────────────────────────────────────────────────────── */}
@@ -45,34 +47,55 @@ export default function Index() {
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">
-              @mono/ui-web
+              {t('web.title')}
             </h1>
             <p className="text-sm text-foreground-muted">
-              Shared component library demo — web app
+              {t('web.subtitle')}
             </p>
           </div>
 
-          {/* Theme Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                Theme: {theme}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Choose Theme</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setTheme('light')}>
-                ☀️ Light
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('dark')}>
-                🌙 Dark
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme('midnight')}>
-                🌌 Midnight
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex items-center gap-2">
+            {/* Language Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  {t(`locale.${locale}` as Parameters<typeof t>[0])}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>{t('common.chooseLanguage')}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {supportedLocales.map((loc) => (
+                  <DropdownMenuItem key={loc} onClick={() => setLocale(loc)}>
+                    {t(`locale.${loc}` as Parameters<typeof t>[0])}
+                    {loc === locale ? ' ✓' : ''}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Theme Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  {t('common.theme')}: {theme}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>{t('common.chooseTheme')}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setTheme('light')}>
+                  ☀️ Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('dark')}>
+                  🌙 Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme('midnight')}>
+                  🌌 Midnight
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </header>
 
@@ -81,65 +104,63 @@ export default function Index() {
 
         {/* ── Button Variants ─────────────────────────────────────────── */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Button</h2>
+          <h2 className="text-xl font-semibold">{t('web.sections.button')}</h2>
           <div className="flex flex-wrap items-center gap-3">
-            <Button>Default</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="destructive">Destructive</Button>
-            <Button variant="outline">Outline</Button>
-            <Button variant="ghost">Ghost</Button>
-            <Button variant="link">Link</Button>
+            <Button>{t('web.buttons.default')}</Button>
+            <Button variant="secondary">{t('web.buttons.secondary')}</Button>
+            <Button variant="destructive">{t('web.buttons.destructive')}</Button>
+            <Button variant="outline">{t('web.buttons.outline')}</Button>
+            <Button variant="ghost">{t('web.buttons.ghost')}</Button>
+            <Button variant="link">{t('web.buttons.link')}</Button>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <Button size="sm">Small</Button>
-            <Button size="default">Default</Button>
-            <Button size="lg">Large</Button>
-            <Button disabled>Disabled</Button>
+            <Button size="sm">{t('web.buttons.small')}</Button>
+            <Button size="default">{t('web.buttons.default')}</Button>
+            <Button size="lg">{t('web.buttons.large')}</Button>
+            <Button disabled>{t('form.disabled')}</Button>
           </div>
         </section>
 
         {/* ── Card ─────────────────────────────────────────────────────── */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Card</h2>
+          <h2 className="text-xl font-semibold">{t('web.sections.card')}</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Card>
               <CardHeader>
-                <CardTitle>Booking Summary</CardTitle>
-                <CardDescription>Your upcoming cruise details</CardDescription>
+                <CardTitle>{t('web.cards.bookingSummary')}</CardTitle>
+                <CardDescription>{t('web.cards.bookingDesc')}</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm">
-                  Abu Dhabi → Dubai Marina — 3 nights, departing Jan 15.
-                </p>
+                <p className="text-sm">{t('web.cards.bookingBody')}</p>
               </CardContent>
               <CardFooter>
-                <Button size="sm">View Details</Button>
+                <Button size="sm">{t('actions.viewDetails')}</Button>
               </CardFooter>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Payment Status</CardTitle>
-                <CardDescription>Last updated today</CardDescription>
+                <CardTitle>{t('web.cards.paymentStatus')}</CardTitle>
+                <CardDescription>{t('web.cards.paymentUpdated')}</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">AED 2,450</p>
-                <p className="text-sm text-foreground-muted">Paid in full</p>
+                <p className="text-2xl font-bold">{t('web.cards.paymentAmount')}</p>
+                <p className="text-sm text-foreground-muted">{t('web.cards.paidInFull')}</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Support</CardTitle>
-                <CardDescription>Need help?</CardDescription>
+                <CardTitle>{t('web.cards.support')}</CardTitle>
+                <CardDescription>{t('web.cards.needHelp')}</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-foreground-muted">
-                  Our team is available 24/7 via chat or email.
+                  {t('web.cards.supportBody')}
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" size="sm">Contact Us</Button>
+                <Button variant="outline" size="sm">{t('actions.contactUs')}</Button>
               </CardFooter>
             </Card>
           </div>
@@ -147,73 +168,72 @@ export default function Index() {
 
         {/* ── Input & Label ────────────────────────────────────────────── */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Input & Label</h2>
+          <h2 className="text-xl font-semibold">{t('web.sections.inputLabel')}</h2>
           <div className="grid max-w-md gap-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" />
+              <Label htmlFor="email">{t('form.email')}</Label>
+              <Input id="email" type="email" placeholder={t('web.inputs.emailPlaceholder')} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="search">Search</Label>
-              <Input id="search" placeholder="Search destinations..." />
+              <Label htmlFor="search">{t('actions.search')}</Label>
+              <Input id="search" placeholder={t('web.inputs.searchPlaceholder')} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="disabled-input">Disabled</Label>
-              <Input id="disabled-input" placeholder="Cannot edit" disabled />
+              <Label htmlFor="disabled-input">{t('form.disabled')}</Label>
+              <Input id="disabled-input" placeholder={t('web.inputs.cannotEdit')} disabled />
             </div>
           </div>
         </section>
 
         {/* ── Form Wrappers ────────────────────────────────────────────── */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Form</h2>
+          <h2 className="text-xl font-semibold">{t('web.sections.form')}</h2>
           <div className="max-w-md space-y-4 rounded-lg border border-border p-6">
             <FormItem name="full-name">
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>{t('form.fullName')}</FormLabel>
               <FormControl>
                 <Input placeholder="John Doe" />
               </FormControl>
               <FormDescription>
-                As it appears on your passport.
+                {t('web.formDemo.fullNameHint')}
               </FormDescription>
             </FormItem>
 
-            <FormItem name="phone" error="Phone number is required">
-              <FormLabel>Phone</FormLabel>
+            <FormItem name="phone" error={t('web.formDemo.phoneError')}>
+              <FormLabel>{t('form.phone')}</FormLabel>
               <FormControl>
-                <Input placeholder="+971 50 123 4567" />
+                <Input placeholder={t('web.formDemo.phonePlaceholder')} />
               </FormControl>
               <FormMessage />
             </FormItem>
 
             <Button type="submit" className="w-full">
-              Submit Booking
+              {t('web.formDemo.submitBooking')}
             </Button>
           </div>
         </section>
 
         {/* ── Dialog ───────────────────────────────────────────────────── */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Dialog</h2>
+          <h2 className="text-xl font-semibold">{t('web.sections.dialog')}</h2>
           <Dialog>
             <DialogTrigger asChild>
-              <Button>Open Dialog</Button>
+              <Button>{t('web.dialog.confirmBooking')}</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Confirm Booking</DialogTitle>
+                <DialogTitle>{t('web.dialog.confirmBooking')}</DialogTitle>
                 <DialogDescription>
-                  You&apos;re about to book a 3-night cruise from Abu Dhabi to Dubai
-                  Marina. This action cannot be undone.
+                  {t('web.dialog.confirmDesc')}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-2 py-4">
-                <Label htmlFor="promo">Promo Code</Label>
-                <Input id="promo" placeholder="Enter promo code" />
+                <Label htmlFor="promo">{t('web.dialog.promoCode')}</Label>
+                <Input id="promo" placeholder={t('web.dialog.promoPlaceholder')} />
               </div>
               <DialogFooter>
-                <Button variant="outline">Cancel</Button>
-                <Button>Confirm</Button>
+                <Button variant="outline">{t('actions.cancel')}</Button>
+                <Button>{t('actions.confirm')}</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -221,31 +241,31 @@ export default function Index() {
 
         {/* ── Toast ────────────────────────────────────────────────────── */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Toast</h2>
+          <h2 className="text-xl font-semibold">{t('web.sections.toast')}</h2>
           <div className="flex flex-wrap gap-3">
             <Button
               variant="outline"
-              onClick={() => toast('Booking saved as draft.')}
+              onClick={() => toast(t('web.toasts.draftSaved'))}
             >
-              Default Toast
+              {t('web.toasts.defaultToast')}
             </Button>
             <Button
               variant="outline"
-              onClick={() => toast.success('Booking confirmed!')}
+              onClick={() => toast.success(t('web.toasts.bookingConfirmed'))}
             >
-              Success Toast
+              {t('web.toasts.successToast')}
             </Button>
             <Button
               variant="outline"
-              onClick={() => toast.error('Payment failed. Try again.')}
+              onClick={() => toast.error(t('web.toasts.paymentFailed'))}
             >
-              Error Toast
+              {t('web.toasts.errorToast')}
             </Button>
             <Button
               variant="outline"
-              onClick={() => toast.warning('Session expiring in 5 minutes.')}
+              onClick={() => toast.warning(t('web.toasts.sessionExpiring'))}
             >
-              Warning Toast
+              {t('web.toasts.warningToast')}
             </Button>
           </div>
         </section>

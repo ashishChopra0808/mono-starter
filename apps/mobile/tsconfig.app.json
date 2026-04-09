@@ -32,6 +32,9 @@
     },
     {
       "path": "../../packages/env/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/i18n/tsconfig.lib.json"
     }
   ]
 }

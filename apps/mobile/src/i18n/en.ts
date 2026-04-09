@@ -1,0 +1,45 @@
+export const en = {
+  mobile: {
+    title: 'UI Mobile Demo',
+    sections: {
+      theme: 'Theme',
+      buttons: 'Buttons',
+      cards: 'Cards',
+      textFields: 'Text Fields',
+      screenStates: 'Screen States',
+    },
+    buttons: {
+      primary: 'Primary',
+      secondary: 'Secondary',
+      delete: 'Delete',
+      outline: 'Outline',
+      ghost: 'Ghost',
+      loading: 'Loading',
+      large: 'Large Button',
+    },
+    cards: {
+      elevated: 'Elevated Card',
+      elevatedDesc: 'With shadow elevation for depth.',
+      outlined: 'Outlined Card',
+      outlinedDesc: 'Bordered surface variant.',
+      filled: 'Filled Card (Pressable)',
+      filledDesc: 'Tap me — I have an onPress handler.',
+    },
+    fields: {
+      namePlaceholder: 'Enter your name',
+      emailPlaceholder: 'you@example.com',
+      emailError: 'Please enter a valid email',
+      disabledField: 'Disabled Field',
+      readOnlyValue: 'Read-only value',
+    },
+    states: {
+      showLoading: 'Show Loading',
+      showEmpty: 'Show Empty',
+      fetchingData: 'Fetching your data…',
+      noBookingsTitle: 'No bookings yet',
+      noBookingsDesc:
+        'Your upcoming trips will appear here once you make a reservation.',
+    },
+    cycleTheme: 'Cycle Theme ({{theme}})',
+  },
+} as const;

@@ -48,6 +48,9 @@
       "path": "../../packages/env"
     },
     {
+      "path": "../../packages/i18n"
+    },
+    {
       "path": "../../packages/ui-web"
     }
   ]

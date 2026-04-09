@@ -1,0 +1,45 @@
+export const hi = {
+  mobile: {
+    title: 'UI मोबाइल डेमो',
+    sections: {
+      theme: 'थीम',
+      buttons: 'बटन',
+      cards: 'कार्ड',
+      textFields: 'टेक्स्ट फ़ील्ड',
+      screenStates: 'स्क्रीन स्टेट्स',
+    },
+    buttons: {
+      primary: 'प्राइमरी',
+      secondary: 'सेकेंडरी',
+      delete: 'हटाएँ',
+      outline: 'आउटलाइन',
+      ghost: 'गोस्ट',
+      loading: 'लोड हो रहा है',
+      large: 'बड़ा बटन',
+    },
+    cards: {
+      elevated: 'एलिवेटेड कार्ड',
+      elevatedDesc: 'गहराई के लिए छाया के साथ।',
+      outlined: 'आउटलाइन कार्ड',
+      outlinedDesc: 'बॉर्डर वाला सरफ़ेस वेरिएंट।',
+      filled: 'फ़िल्ड कार्ड (दबाने योग्य)',
+      filledDesc: 'मुझे दबाएँ — मेरे पास onPress हैंडलर है।',
+    },
+    fields: {
+      namePlaceholder: 'अपना नाम दर्ज करें',
+      emailPlaceholder: 'you@example.com',
+      emailError: 'कृपया वैध ईमेल दर्ज करें',
+      disabledField: 'अक्षम फ़ील्ड',
+      readOnlyValue: 'केवल पढ़ने योग्य',
+    },
+    states: {
+      showLoading: 'लोडिंग दिखाएँ',
+      showEmpty: 'खाली दिखाएँ',
+      fetchingData: 'आपका डेटा लाया जा रहा है…',
+      noBookingsTitle: 'अभी कोई बुकिंग नहीं',
+      noBookingsDesc:
+        'जब आप कोई आरक्षण करेंगे तो आपकी आगामी यात्राएँ यहाँ दिखाई देंगी।',
+    },
+    cycleTheme: 'थीम बदलें ({{theme}})',
+  },
+} as const;

@@ -1,6 +1,7 @@
 import './global.css';
 
 import { ThemeProvider } from '../theme-provider';
+import { I18nProvider } from '../i18n';
 
 export const metadata = {
   title: 'Welcome to admin',
@@ -11,7 +12,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <I18nProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );

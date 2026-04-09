@@ -12,39 +12,36 @@ import {
   sp,
   nativeFontSize,
 } from '@mono/ui-mobile';
-
-// ─── Demo Screen ────────────────────────────────────────────────────────────
-// Showcases all @mono/ui-mobile primitives in a single scrollable screen.
+import { I18nProvider, useTranslation } from '../i18n';
 
 function DemoContent() {
   const { colors, themeName, toggleTheme } = useTheme();
+  const { t, locale, setLocale, supportedLocales } = useTranslation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [showLoading, setShowLoading] = useState(false);
   const [showEmpty, setShowEmpty] = useState(false);
 
-  // Simulate loading state
   if (showLoading) {
     return (
       <Screen scrollable={false}>
-        <LoadingState message="Fetching your data…" />
+        <LoadingState message={t('mobile.states.fetchingData')} />
         <View style={demoStyles.bottomAction}>
           <Button variant="ghost" onPress={() => setShowLoading(false)}>
-            Cancel
+            {t('actions.cancel')}
           </Button>
         </View>
       </Screen>
     );
   }
 
-  // Simulate empty state
   if (showEmpty) {
     return (
       <Screen scrollable={false}>
         <EmptyState
-          title="No bookings yet"
-          description="Your upcoming trips will appear here once you make a reservation."
-          action={{ label: 'Go Back', onPress: () => setShowEmpty(false) }}
+          title={t('mobile.states.noBookingsTitle')}
+          description={t('mobile.states.noBookingsDesc')}
+          action={{ label: t('actions.goBack'), onPress: () => setShowEmpty(false) }}
         />
       </Screen>
     );
@@ -55,53 +52,72 @@ function DemoContent() {
       {/* ── Header ── */}
       <View style={demoStyles.header}>
         <Text style={[demoStyles.title, { color: colors.foreground }]}>
-          UI Mobile Demo
+          {t('mobile.title')}
         </Text>
         <Text style={[demoStyles.subtitle, { color: colors['foreground-muted'] }]}>
-          Theme: {themeName}
+          {t('common.theme')}: {themeName}
         </Text>
+      </View>
+
+      {/* ── Language Switcher ── */}
+      <View style={demoStyles.section}>
+        <Text style={[demoStyles.sectionTitle, { color: colors.foreground }]}>
+          {t('common.language')}
+        </Text>
+        <View style={demoStyles.row}>
+          {supportedLocales.map((loc) => (
+            <Button
+              key={loc}
+              variant={loc === locale ? 'primary' : 'outline'}
+              size="sm"
+              onPress={() => setLocale(loc)}
+            >
+              {t(`locale.${loc}` as Parameters<typeof t>[0])}
+            </Button>
+          ))}
+        </View>
       </View>
 
       {/* ── Theme Toggle ── */}
       <View style={demoStyles.section}>
         <Text style={[demoStyles.sectionTitle, { color: colors.foreground }]}>
-          Theme
+          {t('mobile.sections.theme')}
         </Text>
         <Button variant="outline" size="md" onPress={toggleTheme}>
-          Cycle Theme ({themeName})
+          {t('mobile.cycleTheme', { theme: themeName })}
         </Button>
       </View>
 
       {/* ── Buttons ── */}
       <View style={demoStyles.section}>
         <Text style={[demoStyles.sectionTitle, { color: colors.foreground }]}>
-          Buttons
+          {t('mobile.sections.buttons')}
         </Text>
         <View style={demoStyles.row}>
           <Button variant="primary" size="sm" onPress={() => {}}>
-            Primary
+            {t('mobile.buttons.primary')}
           </Button>
           <Button variant="secondary" size="sm" onPress={() => {}}>
-            Secondary
+            {t('mobile.buttons.secondary')}
           </Button>
           <Button variant="destructive" size="sm" onPress={() => {}}>
-            Delete
+            {t('mobile.buttons.delete')}
           </Button>
         </View>
         <View style={demoStyles.row}>
           <Button variant="outline" size="sm" onPress={() => {}}>
-            Outline
+            {t('mobile.buttons.outline')}
           </Button>
           <Button variant="ghost" size="sm" onPress={() => {}}>
-            Ghost
+            {t('mobile.buttons.ghost')}
           </Button>
           <Button variant="primary" size="sm" loading onPress={() => {}}>
-            Loading
+            {t('mobile.buttons.loading')}
           </Button>
         </View>
         <View style={demoStyles.row}>
           <Button variant="primary" size="lg" onPress={() => {}}>
-            Large Button
+            {t('mobile.buttons.large')}
           </Button>
         </View>
       </View>
@@ -109,32 +125,32 @@ function DemoContent() {
       {/* ── Cards ── */}
       <View style={demoStyles.section}>
         <Text style={[demoStyles.sectionTitle, { color: colors.foreground }]}>
-          Cards
+          {t('mobile.sections.cards')}
         </Text>
         <Card variant="elevated">
           <Text style={[demoStyles.cardTitle, { color: colors.foreground }]}>
-            Elevated Card
+            {t('mobile.cards.elevated')}
           </Text>
           <Text style={{ color: colors['foreground-muted'] }}>
-            With shadow elevation for depth.
+            {t('mobile.cards.elevatedDesc')}
           </Text>
         </Card>
         <View style={{ height: sp('3') }} />
         <Card variant="outlined">
           <Text style={[demoStyles.cardTitle, { color: colors.foreground }]}>
-            Outlined Card
+            {t('mobile.cards.outlined')}
           </Text>
           <Text style={{ color: colors['foreground-muted'] }}>
-            Bordered surface variant.
+            {t('mobile.cards.outlinedDesc')}
           </Text>
         </Card>
         <View style={{ height: sp('3') }} />
         <Card variant="filled" onPress={() => {}}>
           <Text style={[demoStyles.cardTitle, { color: colors.foreground }]}>
-            Filled Card (Pressable)
+            {t('mobile.cards.filled')}
           </Text>
           <Text style={{ color: colors['foreground-muted'] }}>
-            Tap me — I have an onPress handler.
+            {t('mobile.cards.filledDesc')}
           </Text>
         </Card>
       </View>
@@ -142,30 +158,30 @@ function DemoContent() {
       {/* ── Text Fields ── */}
       <View style={demoStyles.section}>
         <Text style={[demoStyles.sectionTitle, { color: colors.foreground }]}>
-          Text Fields
+          {t('mobile.sections.textFields')}
         </Text>
         <Card variant="outlined">
           <TextField
-            label="Name"
-            placeholder="Enter your name"
+            label={t('form.name')}
+            placeholder={t('mobile.fields.namePlaceholder')}
             value={name}
             onChangeText={setName}
           />
           <View style={{ height: sp('3') }} />
           <TextField
-            label="Email"
-            placeholder="you@example.com"
+            label={t('form.email')}
+            placeholder={t('mobile.fields.emailPlaceholder')}
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
-            error={email.length > 0 && !email.includes('@') ? 'Please enter a valid email' : undefined}
+            error={email.length > 0 && !email.includes('@') ? t('mobile.fields.emailError') : undefined}
           />
           <View style={{ height: sp('3') }} />
           <TextField
-            label="Disabled Field"
-            placeholder="Cannot edit"
-            value="Read-only value"
+            label={t('mobile.fields.disabledField')}
+            placeholder={t('form.disabled')}
+            value={t('mobile.fields.readOnlyValue')}
             onChangeText={() => {}}
             disabled
           />
@@ -175,14 +191,14 @@ function DemoContent() {
       {/* ── State Demos ── */}
       <View style={demoStyles.section}>
         <Text style={[demoStyles.sectionTitle, { color: colors.foreground }]}>
-          Screen States
+          {t('mobile.sections.screenStates')}
         </Text>
         <View style={demoStyles.row}>
           <Button variant="secondary" onPress={() => setShowLoading(true)}>
-            Show Loading
+            {t('mobile.states.showLoading')}
           </Button>
           <Button variant="secondary" onPress={() => setShowEmpty(true)}>
-            Show Empty
+            {t('mobile.states.showEmpty')}
           </Button>
         </View>
       </View>
@@ -194,9 +210,11 @@ function DemoContent() {
 
 export const App = () => {
   return (
-    <ThemeProvider>
-      <DemoContent />
-    </ThemeProvider>
+    <I18nProvider>
+      <ThemeProvider>
+        <DemoContent />
+      </ThemeProvider>
+    </I18nProvider>
   );
 };
 
