@@ -85,7 +85,10 @@
     }
   },
   "dependencies": {
+    "@mono/api-contracts": "workspace:*",
     "@mono/logger": "workspace:*",
+    "@mono/validation": "workspace:*",
+    "zod": "^4.3.6",
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",

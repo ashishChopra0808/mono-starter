@@ -10,11 +10,12 @@ import {
 } from '../logging';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProjectModule } from './project/project.module';
 
 const rootLogger = createLogger({ name: 'api' });
 
 @Module({
-  imports: [],
+  imports: [ProjectModule],
   controllers: [AppController],
   providers: [
     AppService,
