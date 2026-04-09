@@ -1,5 +1,7 @@
 'use client';
 
+import { createBrowserLogger } from '@mono/logger';
+
 import { useTheme } from '../theme-provider';
 import { useTranslation } from '../i18n';
 import {
@@ -33,6 +35,8 @@ import {
   Toaster,
   toast,
 } from '@mono/ui-web';
+
+const logger = createBrowserLogger({ prefix: 'web' });
 
 export default function Index() {
   const { theme, setTheme } = useTheme();
@@ -245,7 +249,10 @@ export default function Index() {
           <div className="flex flex-wrap gap-3">
             <Button
               variant="outline"
-              onClick={() => toast(t('web.toasts.draftSaved'))}
+              onClick={() => {
+                logger.info({ action: 'toast' }, 'Default toast triggered');
+                toast(t('web.toasts.draftSaved'));
+              }}
             >
               {t('web.toasts.defaultToast')}
             </Button>

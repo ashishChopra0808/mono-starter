@@ -11,7 +11,8 @@
     "emitDecoratorMetadata": true,
     "target": "es2021",
     "paths": {
-      "@mono/env/api": ["packages/env/dist/api.d.ts"]
+      "@mono/env/api": ["packages/env/dist/api.d.ts"],
+      "@mono/logger/node": ["packages/logger/dist/node.d.ts"]
     }
   },
   "include": ["src/**/*.ts"],
@@ -19,6 +20,9 @@
   "references": [
     {
       "path": "../../packages/env/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/logger/tsconfig.lib.json"
     }
   ]
 }

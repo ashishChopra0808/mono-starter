@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { createBrowserLogger } from '@mono/logger';
 import {
   ThemeProvider,
   useTheme,
@@ -13,6 +14,8 @@ import {
   nativeFontSize,
 } from '@mono/ui-mobile';
 import { I18nProvider, useTranslation } from '../i18n';
+
+const logger = createBrowserLogger({ prefix: 'mobile' });
 
 function DemoContent() {
   const { colors, themeName, toggleTheme } = useTheme();
@@ -70,7 +73,10 @@ function DemoContent() {
               key={loc}
               variant={loc === locale ? 'primary' : 'outline'}
               size="sm"
-              onPress={() => setLocale(loc)}
+              onPress={() => {
+                logger.info({ from: locale, to: loc }, 'Language switched');
+                setLocale(loc);
+              }}
             >
               {t(`locale.${loc}` as Parameters<typeof t>[0])}
             </Button>

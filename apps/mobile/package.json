@@ -10,6 +10,7 @@
     "@expo/metro-config": "*",
     "@mono/design-tokens": "workspace:*",
     "@mono/i18n": "workspace:*",
+    "@mono/logger": "workspace:*",
     "@mono/ui-mobile": "workspace:*",
     "@testing-library/react-native": "*",
     "expo": "*",

@@ -1,10 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 
+import { createLogger } from '@mono/logger/node';
+
 import { AppService } from './app.service';
 
 interface AppData {
   message: string;
 }
+
+const logger = createLogger({ name: 'app-controller' });
 
 @Controller()
 export class AppController {
@@ -12,6 +16,7 @@ export class AppController {
 
   @Get()
   getData(): AppData {
+    logger.info({ action: 'getData' }, 'Handling getData request');
     return this.appService.getData();
   }
 }

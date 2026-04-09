@@ -1,11 +1,29 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
+import { createLogger } from '@mono/logger/node';
+
+import {
+  CorrelationIdMiddleware,
+  LoggingInterceptor,
+  ROOT_LOGGER,
+} from '../logging';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+
+const rootLogger = createLogger({ name: 'api' });
 
 @Module({
   imports: [],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: ROOT_LOGGER, useValue: rootLogger },
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(CorrelationIdMiddleware).forRoutes('*');
+  }
+}
