@@ -1,7 +1,9 @@
 const { withNxMetro } = require('@nx/expo');
 const { getDefaultConfig } = require('@expo/metro-config');
 const { mergeConfig } = require('metro-config');
+const path = require('path');
 
+const workspaceRoot = path.resolve(__dirname, '../..');
 const defaultConfig = getDefaultConfig(__dirname);
 const { assetExts, sourceExts } = defaultConfig.resolver;
 
@@ -19,30 +21,34 @@ const customConfig = {
   resolver: {
     assetExts: assetExts.filter((ext) => ext !== 'svg'),
     sourceExts: [...sourceExts, 'cjs', 'mjs', 'svg'],
-    resolveRequest: (context, moduleName, platform) => {
-      if (moduleName.endsWith('.js') && moduleName.startsWith('.')) {
-        const tsName = moduleName.replace(/\.js$/, '.ts');
-        const tsxName = moduleName.replace(/\.js$/, '.tsx');
-        
-        try {
-          return context.resolveRequest(context, tsName, platform);
-        } catch (e) {
-          try {
-            return context.resolveRequest(context, tsxName, platform);
-          } catch (e2) {}
-        }
-      }
-      return context.resolveRequest(context, moduleName, platform);
-    },
+    unstable_enableSymlinks: true,
+    unstable_enablePackageExports: true,
   },
 };
 
-module.exports = withNxMetro(mergeConfig(defaultConfig, customConfig), {
-  // Change this to true to see debugging info.
-  // Useful if you have issues resolving modules
+const nxMetroConfig = withNxMetro(mergeConfig(defaultConfig, customConfig), {
   debug: false,
-  // all the file extensions used for imports other than 'ts', 'tsx', 'js', 'jsx', 'json'
   extensions: [],
-  // Specify folders to watch, in addition to Nx defaults (workspace libraries and node_modules)
   watchFolders: [],
 });
+
+// Wrap the NX resolver to handle .js → .ts/.tsx for workspace packages
+// (withNxMetro replaces resolveRequest, so we must wrap after it)
+const nxResolveRequest = nxMetroConfig.resolver.resolveRequest;
+nxMetroConfig.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (moduleName.startsWith('.') && moduleName.endsWith('.js')) {
+    const stripped = moduleName.slice(0, -3);
+    for (const ext of ['.ts', '.tsx']) {
+      try {
+        return nxResolveRequest(
+          { ...context, resolveRequest: nxResolveRequest },
+          stripped + ext,
+          platform,
+        );
+      } catch {}
+    }
+  }
+  return nxResolveRequest(context, moduleName, platform);
+};
+
+module.exports = nxMetroConfig;

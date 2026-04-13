@@ -64,7 +64,13 @@
       "@parcel/watcher",
       "sharp",
       "@nestjs/core"
-    ]
+    ],
+    "overrides": {
+      "react": "19.1.0",
+      "react-dom": "19.1.0",
+      "react-native-safe-area-context": "5.6.2",
+      "jest-expo": "54.0.17"
+    }
   },
   "dependencies": {
     "@expo/metro-config": "~54.0.9",
@@ -73,14 +79,16 @@
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
     "axios": "^1.6.0",
+    "dotenv": "^17.4.2",
     "expo": "~54.0.0",
     "expo-splash-screen": "~31.0.11",
     "expo-status-bar": "~3.0.8",
     "expo-system-ui": "~6.0.8",
     "next": "~16.1.6",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-native": "0.81.5",
+    "react-native-safe-area-context": "~5.6.2",
     "react-native-svg": "15.12.1",
     "react-native-svg-transformer": "~1.5.1",
     "react-native-web": "~0.21.0",

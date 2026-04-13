@@ -1,6 +1,14 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 const { join } = require('path');
 
+const pinoExternals = [
+  'pino',
+  'pino-pretty',
+  'pino/file',
+  'thread-stream',
+  'sonic-boom',
+];
+
 module.exports = {
   output: {
     path: join(__dirname, 'dist'),
@@ -9,6 +17,14 @@ module.exports = {
       devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     }),
   },
+  externals: [
+    ({ request }, callback) => {
+      if (pinoExternals.some((mod) => request === mod || request.startsWith(mod + '/'))) {
+        return callback(null, `commonjs ${request}`);
+      }
+      callback();
+    },
+  ],
   plugins: [
     new NxAppWebpackPlugin({
       target: 'node',
@@ -20,6 +36,7 @@ module.exports = {
       outputHashing: 'none',
       generatePackageJson: false,
       sourceMap: true,
+      mergeExternals: true,
     }),
   ],
 };

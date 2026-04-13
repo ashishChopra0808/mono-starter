@@ -13,5 +13,9 @@
     "types": ["react", "react-native"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "references": []
+  "references": [
+    {
+      "path": "../design-tokens/tsconfig.lib.json"
+    }
+  ]
 }

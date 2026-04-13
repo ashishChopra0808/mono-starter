@@ -2,6 +2,14 @@
   "name": "mobile",
   "version": "0.0.1",
   "private": true,
+  "nx": {
+    "targets": {
+      "dev": {
+        "continuous": true,
+        "executor": "@nx/expo:start"
+      }
+    }
+  },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile"

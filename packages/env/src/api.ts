@@ -1,8 +1,13 @@
+import { config } from 'dotenv';
+import { resolve } from 'node:path';
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
 import { nodeEnvSchema, portSchema } from './shared.js';
 import { sharedServerSchemas } from './server.js';
+
+// Load .env from the workspace root for non-Next.js apps (Next.js handles this automatically)
+config({ path: resolve(process.cwd(), '.env') });
 
 /**
  * Typed environment for the **api** app (NestJS).

@@ -1,3 +1,5 @@
+'use client';
+
 import { createI18n, sharedTranslations } from '@mono/i18n';
 import { en } from './en';
 import { hi } from './hi';
