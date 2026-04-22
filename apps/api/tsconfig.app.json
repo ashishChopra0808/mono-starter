@@ -19,13 +19,16 @@
   "exclude": [],
   "references": [
     {
-      "path": "../../packages/env/tsconfig.lib.json"
+      "path": "../../packages/validation/tsconfig.lib.json"
     },
     {
       "path": "../../packages/logger/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/validation/tsconfig.lib.json"
+      "path": "../../packages/env/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/db/tsconfig.lib.json"
     },
     {
       "path": "../../packages/api-contracts/tsconfig.lib.json"

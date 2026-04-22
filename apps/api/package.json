@@ -86,6 +86,7 @@
   },
   "dependencies": {
     "@mono/api-contracts": "workspace:*",
+    "@mono/db": "workspace:*",
     "@mono/env": "workspace:*",
     "@mono/logger": "workspace:*",
     "@mono/validation": "workspace:*",

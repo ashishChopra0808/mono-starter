@@ -13,9 +13,36 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./schema": {
+      "mono-starter": "./src/schema/index.ts",
+      "types": "./dist/schema/index.d.ts",
+      "import": "./dist/schema/index.js",
+      "default": "./dist/schema/index.js"
+    },
+    "./client": {
+      "mono-starter": "./src/client.ts",
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js",
+      "default": "./dist/client.js"
     }
   },
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/migrate.ts",
+    "db:seed": "tsx src/seed.ts",
+    "db:studio": "drizzle-kit studio",
+    "db:push": "drizzle-kit push",
+    "db:test": "tsx src/__tests__/smoke.test.ts"
+  },
   "dependencies": {
+    "drizzle-orm": "^0.44.2",
+    "postgres": "^3.4.7",
     "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.1",
+    "tsx": "^4.19.4"
   }
 }

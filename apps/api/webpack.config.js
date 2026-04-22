@@ -1,12 +1,20 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 const { join } = require('path');
 
-const pinoExternals = [
+/**
+ * Modules that must be externalized from the webpack bundle.
+ * These use Node.js features (native addons, worker threads, etc.)
+ * that are incompatible with webpack's module resolution.
+ */
+const nodeExternals = [
+  // Pino logging (uses worker threads)
   'pino',
   'pino-pretty',
   'pino/file',
   'thread-stream',
   'sonic-boom',
+  // Postgres.js driver (uses native TCP sockets)
+  'postgres',
 ];
 
 module.exports = {
@@ -19,7 +27,7 @@ module.exports = {
   },
   externals: [
     ({ request }, callback) => {
-      if (pinoExternals.some((mod) => request === mod || request.startsWith(mod + '/'))) {
+      if (nodeExternals.some((mod) => request === mod || request.startsWith(mod + '/'))) {
         return callback(null, `commonjs ${request}`);
       }
       callback();

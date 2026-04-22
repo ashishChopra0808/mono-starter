@@ -30,6 +30,8 @@
       "@mono/utils": ["packages/utils/src/index.ts"],
       "@mono/auth": ["packages/auth/src/index.ts"],
       "@mono/db": ["packages/db/src/index.ts"],
+      "@mono/db/schema": ["packages/db/src/schema/index.ts"],
+      "@mono/db/client": ["packages/db/src/client.ts"],
       "@mono/logger": ["packages/logger/src/index.ts"],
       "@mono/logger/node": ["packages/logger/src/node.ts"],
       "@mono/api-contracts": ["packages/api-contracts/src/index.ts"],

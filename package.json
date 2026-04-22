@@ -10,7 +10,13 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,jsx,json,md,css,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,jsx,json,md,css,yml,yaml}\"",
     "test": "nx run-many -t test",
-    "typecheck": "nx run-many -t typecheck"
+    "typecheck": "nx run-many -t typecheck",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:generate": "nx run db:db:generate",
+    "db:migrate": "nx run db:db:migrate",
+    "db:seed": "nx run db:db:seed",
+    "db:studio": "nx run db:db:studio"
   },
   "devDependencies": {
     "@babel/runtime": "~7.27.6",

@@ -12,5 +12,10 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
+  "exclude": [
+    "src/migrate.ts",
+    "src/seed.ts",
+    "src/__tests__/**"
+  ],
   "references": []
 }
