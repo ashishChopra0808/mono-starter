@@ -10,7 +10,13 @@ import {
 
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Public } from '../../common/decorators/public.decorator';
-import { RefreshDto,SignInDto } from './auth.dto';
+import { ZodValidationPipe } from '../../validation/zod-validation.pipe';
+import {
+  type RefreshDto,
+  type SignInDto,
+  refreshSchema,
+  signInSchema,
+} from './auth.dto';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -25,7 +31,9 @@ export class AuthController {
   @Public()
   @Post('sign-in')
   @HttpCode(HttpStatus.OK)
-  async signIn(@Body() body: SignInDto): Promise<{ data: AuthSession }> {
+  async signIn(
+    @Body(new ZodValidationPipe(signInSchema)) body: SignInDto,
+  ): Promise<{ data: AuthSession }> {
     const session = await this.authService.signIn(body.email, body.password);
     return { data: session };
   }
@@ -39,7 +47,9 @@ export class AuthController {
   @Public()
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  async refresh(@Body() body: RefreshDto): Promise<{ data: AuthSession }> {
+  async refresh(
+    @Body(new ZodValidationPipe(refreshSchema)) body: RefreshDto,
+  ): Promise<{ data: AuthSession }> {
     const session = await this.authService.refresh(body.refreshToken);
     return { data: session };
   }
@@ -48,11 +58,13 @@ export class AuthController {
    * POST /auth/sign-out
    *
    * Invalidate a refresh token (delete the session).
+   * Requires authentication — the caller must provide a valid access token.
    */
-  @Public()
   @Post('sign-out')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async signOut(@Body() body: RefreshDto): Promise<void> {
+  async signOut(
+    @Body(new ZodValidationPipe(refreshSchema)) body: RefreshDto,
+  ): Promise<void> {
     await this.authService.signOut(body.refreshToken);
   }
 

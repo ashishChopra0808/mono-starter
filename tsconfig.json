@@ -43,9 +43,6 @@
       "path": "./packages/validation"
     },
     {
-      "path": "./packages/utils"
-    },
-    {
       "path": "./packages/auth"
     },
     {
@@ -56,9 +53,6 @@
     },
     {
       "path": "./packages/api-contracts"
-    },
-    {
-      "path": "./packages/core"
     },
     {
       "path": "./packages/env"

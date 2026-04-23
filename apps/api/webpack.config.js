@@ -17,6 +17,9 @@ const nodeExternals = [
   'postgres',
   // bcrypt (native C++ addon)
   'bcrypt',
+  // NestJS optional peer dependencies (not used in this project)
+  '@nestjs/websockets',
+  '@nestjs/microservices',
 ];
 
 module.exports = {

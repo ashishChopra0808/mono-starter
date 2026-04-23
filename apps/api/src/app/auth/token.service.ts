@@ -1,4 +1,4 @@
-import { randomBytes } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 
 import { Role, TokenPayload } from '@mono/auth';
 import { apiEnv } from '@mono/env/api';
@@ -29,10 +29,20 @@ export class TokenService {
 
   /**
    * Creates an opaque refresh token (random hex string).
-   * Stored in the database `sessions` table.
+   * Stored in the database `sessions` table as a SHA-256 hash.
    */
   createRefreshToken(): string {
     return randomBytes(40).toString('hex');
+  }
+
+  /**
+   * Hash a refresh token for storage.
+   *
+   * We store hashes instead of plaintext so that a database compromise
+   * does not immediately expose all active refresh tokens.
+   */
+  hashRefreshToken(token: string): string {
+    return createHash('sha256').update(token).digest('hex');
   }
 
   /**

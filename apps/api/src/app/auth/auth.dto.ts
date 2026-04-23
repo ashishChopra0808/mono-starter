@@ -1,12 +1,19 @@
-// ─── DTOs ────────────────────────────────────────────────────────────────────
-// NestJS requires concrete classes for @Body() parameters (decorator metadata
-// reflection needs a constructor function, not an interface).
+import { emailSchema } from '@mono/validation';
+import { z } from 'zod';
 
-export class SignInDto {
-  email!: string;
-  password!: string;
-}
+// ─── Auth Schemas ────────────────────────────────────────────────────────────
+// Zod schemas for auth request validation — consistent with the project
+// module's approach. Used via ZodValidationPipe in controllers.
 
-export class RefreshDto {
-  refreshToken!: string;
-}
+export const signInSchema = z.object({
+  email: emailSchema,
+  password: z.string().min(1, 'Password is required').max(128),
+});
+
+export type SignInDto = z.infer<typeof signInSchema>;
+
+export const refreshSchema = z.object({
+  refreshToken: z.string().min(1, 'Refresh token is required'),
+});
+
+export type RefreshDto = z.infer<typeof refreshSchema>;

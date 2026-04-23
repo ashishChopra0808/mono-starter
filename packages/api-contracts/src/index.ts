@@ -23,3 +23,7 @@ export type {
   ProjectListResponse,
   ProjectResponse,
 } from './project.contract.js';
+
+export { authResponseSchemas } from './auth.contract.js';
+
+export type { AuthContract } from './auth.contract.js';

@@ -1,4 +1,5 @@
-import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { check, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
 /**
  * Core users table.
@@ -7,17 +8,24 @@ import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
  *   pnpm db:generate   — generates a migration SQL file
  *   pnpm db:migrate    — applies the migration
  */
-export const users = pgTable('users', {
-  id: uuid()
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  email: varchar({ length: 255 }).notNull().unique(),
-  name: varchar({ length: 255 }),
-  passwordHash: text(), // nullable — allows OAuth users without passwords
-  role: varchar({ length: 50 }).notNull().default('user'),
-  createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp({ withTimezone: true })
-    .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date()),
-});
+export const users = pgTable(
+  'users',
+  {
+    id: uuid()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    email: varchar({ length: 255 }).notNull().unique(),
+    name: varchar({ length: 255 }),
+    passwordHash: text(), // nullable — allows OAuth users without passwords
+    role: varchar({ length: 50 }).notNull().default('user'),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    // Restrict role values at the database level
+    check('users_role_check', sql`${table.role} IN ('user', 'editor', 'admin')`),
+  ],
+);

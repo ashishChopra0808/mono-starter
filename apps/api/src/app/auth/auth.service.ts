@@ -1,9 +1,11 @@
 import type { AuthSession, AuthUser } from '@mono/auth';
+import type { Database } from '@mono/db';
+import { eq, sessions, users } from '@mono/db';
 import type { User } from '@mono/db';
-import { eq, getDb, sessions, users } from '@mono/db';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 
+import { DATABASE } from '../../database';
 import { TokenService } from './token.service';
 
 /** bcrypt cost factor — 10 rounds is ~100ms on modern hardware. */
@@ -32,9 +34,10 @@ const USER_PROFILE_COLUMNS = {
 
 @Injectable()
 export class AuthService {
-  private readonly db = getDb();
-
-  constructor(private readonly tokenService: TokenService) {}
+  constructor(
+    @Inject(DATABASE) private readonly db: Database,
+    private readonly tokenService: TokenService,
+  ) {}
 
   /**
    * Authenticate a user with email and password.
@@ -69,12 +72,14 @@ export class AuthService {
    * concurrent refresh calls with the same token both succeed.
    */
   async refresh(refreshToken: string): Promise<AuthSession> {
+    const hashedToken = this.tokenService.hashRefreshToken(refreshToken);
+
     return this.db.transaction(async (tx) => {
-      // 1. Find session
+      // 1. Find session by hashed token
       const [session] = await tx
         .select()
         .from(sessions)
-        .where(eq(sessions.refreshToken, refreshToken));
+        .where(eq(sessions.refreshToken, hashedToken));
 
       if (!session) {
         throw new UnauthorizedException('Invalid refresh token');
@@ -106,32 +111,34 @@ export class AuthService {
         user.role as AuthUser['role'],
       );
       const newRefreshToken = this.tokenService.createRefreshToken();
+      const newHashedToken = this.tokenService.hashRefreshToken(newRefreshToken);
       const expiresAt = this.tokenService.getRefreshTokenExpiry();
 
       await tx.insert(sessions).values({
         userId: user.id,
-        refreshToken: newRefreshToken,
+        refreshToken: newHashedToken,
         expiresAt,
       });
 
       return {
         user: toAuthUser(user),
         accessToken,
-        refreshToken: newRefreshToken,
+        refreshToken: newRefreshToken, // Return plaintext to client
         expiresAt: expiresAt.toISOString(),
       };
     });
   }
 
   /**
-   * Sign out — delete the session by refresh token.
+   * Sign out — delete the session by refresh token hash.
    *
    * Intentionally idempotent: if the token doesn't exist (already signed out,
    * or invalid), we still return success. This avoids leaking information
    * about token validity and makes retry-safe sign-out flows simple.
    */
   async signOut(refreshToken: string): Promise<void> {
-    await this.db.delete(sessions).where(eq(sessions.refreshToken, refreshToken));
+    const hashedToken = this.tokenService.hashRefreshToken(refreshToken);
+    await this.db.delete(sessions).where(eq(sessions.refreshToken, hashedToken));
   }
 
   /**
@@ -169,18 +176,19 @@ export class AuthService {
       user.role as AuthUser['role'],
     );
     const refreshToken = this.tokenService.createRefreshToken();
+    const hashedToken = this.tokenService.hashRefreshToken(refreshToken);
     const expiresAt = this.tokenService.getRefreshTokenExpiry();
 
     await this.db.insert(sessions).values({
       userId: user.id,
-      refreshToken,
+      refreshToken: hashedToken, // Store hash, not plaintext
       expiresAt,
     });
 
     return {
       user: toAuthUser(user),
       accessToken,
-      refreshToken,
+      refreshToken, // Return plaintext to client
       expiresAt: expiresAt.toISOString(),
     };
   }
