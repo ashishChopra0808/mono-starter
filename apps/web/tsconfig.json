@@ -48,6 +48,9 @@
       "path": "../../packages/env"
     },
     {
+      "path": "../../packages/auth"
+    },
+    {
       "path": "../../packages/ui-web"
     },
     {

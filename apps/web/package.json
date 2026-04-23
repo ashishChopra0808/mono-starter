@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mono/auth": "workspace:*",
     "@mono/i18n": "workspace:*",
     "@mono/logger": "workspace:*",
     "@mono/ui-web": "workspace:*",
@@ -28,8 +29,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "tailwindcss": "^4.0.0",
     "@tailwindcss/postcss": "^4.0.0",
-    "postcss": "^8.4.0"
+    "postcss": "^8.4.0",
+    "tailwindcss": "^4.0.0"
   }
 }

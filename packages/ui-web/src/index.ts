@@ -58,3 +58,7 @@ export {
   useFormItem,
 } from './components/form';
 export { Toaster, toast } from './components/sonner';
+
+// Auth
+export { AuthProvider, useAuth } from './components/auth/auth-provider';
+export { PermissionGate } from './components/auth/permission-gate';

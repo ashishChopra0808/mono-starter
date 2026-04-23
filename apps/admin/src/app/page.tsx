@@ -1,5 +1,8 @@
 'use client';
 
+import { AuthUser, Permission, Role, ROLES } from '@mono/auth';
+import { AuthProvider, PermissionGate, useAuth } from '@mono/ui-web';
+
 import { useTheme } from '../theme-provider';
 import { useTranslation } from '../i18n';
 import {
@@ -33,7 +36,20 @@ import {
   toast,
 } from '@mono/ui-web';
 
+import React, { useState } from 'react';
+
 export default function AdminDashboard() {
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  return (
+    <AuthProvider user={user}>
+      <AdminDashboardContent setUser={setUser} />
+    </AuthProvider>
+  );
+}
+
+function AdminDashboardContent({ setUser }: { setUser: (user: AuthUser | null) => void }) {
+  const { user } = useAuth();
   const { theme, setTheme } = useTheme();
   const { t, locale, setLocale, dir, supportedLocales } = useTranslation();
 
@@ -111,6 +127,31 @@ export default function AdminDashboard() {
                 <DropdownMenuItem onClick={() => setTheme('midnight')}>
                   🌌 Midnight
                 </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Role Switcher (Mock Auth) */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant={user ? 'default' : 'outline'} size="sm" className={user?.role === 'admin' ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90' : 'font-bold text-primary'}>
+                  Role: {user ? user.role : 'Guest'}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Mock Authentication</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setUser(null)}>
+                  Sign Out (Guest)
+                </DropdownMenuItem>
+                {ROLES.map((role: Role) => (
+                  <DropdownMenuItem 
+                    key={role} 
+                    onClick={() => setUser({ id: 'mock-1', name: 'Mock User', email: 'test@test.com', role })}
+                  >
+                    Login as {role}
+                    {user?.role === role ? ' ✓' : ''}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -277,49 +318,101 @@ export default function AdminDashboard() {
               </CardFooter>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">{t('admin.quickAction.sendNotification')}</CardTitle>
-                <CardDescription>{t('admin.quickAction.broadcastToAll')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-foreground-muted">
-                  {t('admin.quickAction.notificationBody')}
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                  onClick={() => toast.warning(t('admin.quickAction.comingSoon'))}
-                >
-                  {t('actions.compose')}
-                </Button>
-              </CardFooter>
-            </Card>
+            {/* Only Editors and Admins can send notifications */}
+            <PermissionGate 
+              permission={Permission.CONTENT_PUBLISH} 
+              fallback={
+                <Card className="opacity-50 grayscale">
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center justify-between">
+                      {t('admin.quickAction.sendNotification')}
+                      <span className="text-xs text-destructive uppercase tracking-wider font-bold">Access Denied</span>
+                    </CardTitle>
+                    <CardDescription>Requires {Permission.CONTENT_PUBLISH}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-foreground-muted">
+                      You do not have permission to broadcast notifications.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button variant="outline" size="sm" className="w-full" disabled>
+                      {t('actions.compose')}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              }
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">{t('admin.quickAction.sendNotification')}</CardTitle>
+                  <CardDescription>{t('admin.quickAction.broadcastToAll')}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-foreground-muted">
+                    {t('admin.quickAction.notificationBody')}
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => toast.warning(t('admin.quickAction.comingSoon'))}
+                  >
+                    {t('actions.compose')}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </PermissionGate>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">{t('admin.quickAction.exportData')}</CardTitle>
-                <CardDescription>{t('admin.quickAction.downloadReports')}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-foreground-muted">
-                  {t('admin.quickAction.exportBody')}
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  className="w-full"
-                  onClick={() => toast.success(t('admin.quickAction.exportStarted'))}
-                >
-                  {t('admin.quickAction.exportCsv')}
-                </Button>
-              </CardFooter>
-            </Card>
+            {/* Only Admins can export data (Capability check instead of Role check) */}
+            <PermissionGate 
+              permission={Permission.USERS_READ}
+              fallback={
+                <Card className="opacity-50 grayscale">
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center justify-between">
+                      {t('admin.quickAction.exportData')}
+                      <span className="text-xs text-destructive uppercase tracking-wider font-bold">Access Denied</span>
+                    </CardTitle>
+                    <CardDescription>Requires Admin Role</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-foreground-muted">
+                      Data export is restricted to administrators only.
+                    </p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button variant="secondary" size="sm" className="w-full" disabled>
+                      {t('admin.quickAction.exportCsv')}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              }
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">{t('admin.quickAction.exportData')}</CardTitle>
+                  <CardDescription>{t('admin.quickAction.downloadReports')}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-foreground-muted">
+                    {t('admin.quickAction.exportBody')}
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => toast.success(t('admin.quickAction.exportStarted'))}
+                  >
+                    {t('admin.quickAction.exportCsv')}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </PermissionGate>
           </div>
         </section>
       </main>
