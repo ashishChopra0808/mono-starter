@@ -1,9 +1,10 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-
 import { createLogger } from '@mono/logger/node';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 
 import { AllExceptionsFilter } from '../common/filters/all-exceptions.filter';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 import {
   CorrelationIdMiddleware,
   LoggingInterceptor,
@@ -26,6 +27,10 @@ const rootLogger = createLogger({ name: 'api' });
     { provide: ROOT_LOGGER, useValue: rootLogger },
     { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
     { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    // Global auth: all routes require a valid JWT unless decorated with @Public()
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    // Global authz: checks @Roles() if present, otherwise allows any authenticated user
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AppModule implements NestModule {

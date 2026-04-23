@@ -1,3 +1,4 @@
+import type { Logger } from '@mono/logger/node';
 import {
   ArgumentsHost,
   Catch,
@@ -7,8 +8,6 @@ import {
   Inject,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-
-import type { Logger } from '@mono/logger/node';
 
 import { ROOT_LOGGER } from '../../logging';
 

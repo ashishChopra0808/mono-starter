@@ -1,3 +1,10 @@
+import type { PaginationQuery } from '@mono/api-contracts';
+import { paginationQuerySchema } from '@mono/api-contracts';
+import type { CreateProject, UpdateProject } from '@mono/validation';
+import {
+  createProjectSchema,
+  updateProjectSchema,
+} from '@mono/validation';
 import {
   Body,
   Controller,
@@ -9,14 +16,6 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-
-import {
-  createProjectSchema,
-  updateProjectSchema,
-} from '@mono/validation';
-import type { CreateProject, UpdateProject } from '@mono/validation';
-import { paginationQuerySchema } from '@mono/api-contracts';
-import type { PaginationQuery } from '@mono/api-contracts';
 
 import { ZodValidationPipe } from '../../validation/zod-validation.pipe';
 import { ProjectService } from './project.service';

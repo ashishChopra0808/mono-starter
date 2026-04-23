@@ -1,22 +1,70 @@
-import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
+import type { AuthSession, AuthUser } from '@mono/auth';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 
-// TODO: Implement authentication
-// - Add passport / JWT strategy
-// - POST /auth/login — authenticate and return token
-// - POST /auth/register — create account
-// - POST /auth/refresh — refresh token
-// - Add AuthGuard for protected routes
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
+import { Public } from '../../common/decorators/public.decorator';
+import { RefreshDto,SignInDto } from './auth.dto';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  /**
+   * POST /auth/sign-in
+   *
+   * Authenticate with email + password. Returns access and refresh tokens.
+   */
+  @Public()
+  @Post('sign-in')
+  @HttpCode(HttpStatus.OK)
+  async signIn(@Body() body: SignInDto): Promise<{ data: AuthSession }> {
+    const session = await this.authService.signIn(body.email, body.password);
+    return { data: session };
+  }
+
+  /**
+   * POST /auth/refresh
+   *
+   * Exchange a refresh token for new access + refresh tokens.
+   * The old refresh token is invalidated (rotation).
+   */
+  @Public()
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  async refresh(@Body() body: RefreshDto): Promise<{ data: AuthSession }> {
+    const session = await this.authService.refresh(body.refreshToken);
+    return { data: session };
+  }
+
+  /**
+   * POST /auth/sign-out
+   *
+   * Invalidate a refresh token (delete the session).
+   */
+  @Public()
+  @Post('sign-out')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async signOut(@Body() body: RefreshDto): Promise<void> {
+    await this.authService.signOut(body.refreshToken);
+  }
+
+  /**
+   * GET /auth/me
+   *
+   * Returns the currently authenticated user's profile.
+   * Requires a valid access token.
+   */
   @Get('me')
-  @HttpCode(HttpStatus.NOT_IMPLEMENTED)
-  me() {
-    return {
-      error: {
-        code: 'NOT_IMPLEMENTED',
-        message: 'Auth module is a placeholder — implement authentication strategy here',
-      },
-    };
+  async me(@CurrentUser() user: AuthUser): Promise<{ data: AuthUser }> {
+    const profile = await this.authService.me(user.id);
+    return { data: profile };
   }
 }

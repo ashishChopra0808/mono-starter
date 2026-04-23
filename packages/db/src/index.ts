@@ -8,3 +8,7 @@
 
 export * from './client.js';
 export * from './schema/index.js';
+
+// Re-export commonly used drizzle-orm operators so consuming apps
+// don't need drizzle-orm as a direct dependency.
+export { eq, ne, gt, gte, lt, lte, and, or, sql } from 'drizzle-orm';

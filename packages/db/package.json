@@ -41,6 +41,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.1",
     "tsx": "^4.19.4"

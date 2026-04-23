@@ -15,6 +15,8 @@ const nodeExternals = [
   'sonic-boom',
   // Postgres.js driver (uses native TCP sockets)
   'postgres',
+  // bcrypt (native C++ addon)
+  'bcrypt',
 ];
 
 module.exports = {

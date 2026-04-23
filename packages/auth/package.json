@@ -17,5 +17,8 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.5"
   }
 }

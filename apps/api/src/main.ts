@@ -1,8 +1,7 @@
-import { RequestMethod, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-
 import { apiEnv } from '@mono/env/api';
 import { createLogger } from '@mono/logger/node';
+import { RequestMethod, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 import { PinoLoggerAdapter } from './logging';

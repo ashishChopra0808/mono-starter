@@ -4,6 +4,11 @@
   "private": true,
   "nx": {
     "targets": {
+      "build": {
+        "options": {
+          "command": "NODE_ENV=production next build"
+        }
+      },
       "dev": {
         "options": {
           "command": "next dev --port 4300"

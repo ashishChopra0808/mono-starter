@@ -1,3 +1,4 @@
+import type { Logger } from '@mono/logger/node';
 import {
   CallHandler,
   ExecutionContext,
@@ -7,8 +8,6 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Observable, tap } from 'rxjs';
-
-import type { Logger } from '@mono/logger/node';
 
 export const ROOT_LOGGER = Symbol('ROOT_LOGGER');
 

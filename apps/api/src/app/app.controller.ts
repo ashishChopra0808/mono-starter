@@ -1,7 +1,7 @@
+import { createLogger } from '@mono/logger/node';
 import { Controller, Get } from '@nestjs/common';
 
-import { createLogger } from '@mono/logger/node';
-
+import { Public } from '../common/decorators/public.decorator';
 import { AppService } from './app.service';
 
 interface AppData {
@@ -10,6 +10,7 @@ interface AppData {
 
 const logger = createLogger({ name: 'app-controller' });
 
+@Public()
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}

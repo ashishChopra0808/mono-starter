@@ -86,10 +86,13 @@
   },
   "dependencies": {
     "@mono/api-contracts": "workspace:*",
+    "@mono/auth": "workspace:*",
     "@mono/db": "workspace:*",
     "@mono/env": "workspace:*",
     "@mono/logger": "workspace:*",
     "@mono/validation": "workspace:*",
+    "bcrypt": "^6.0.0",
+    "jsonwebtoken": "^9.0.2",
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
@@ -104,6 +107,8 @@
   },
   "devDependencies": {
     "@nestjs/testing": "^11.0.0",
-    "@types/express": "^5.0.6"
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.9"
   }
 }

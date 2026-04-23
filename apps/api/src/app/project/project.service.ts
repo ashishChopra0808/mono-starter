@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 
+import type { PaginationQuery } from '@mono/api-contracts';
 import type {
   CreateProject,
   Project,
   UpdateProject,
 } from '@mono/validation';
-import type { PaginationQuery } from '@mono/api-contracts';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class ProjectService {

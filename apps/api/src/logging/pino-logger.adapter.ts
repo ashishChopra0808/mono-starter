@@ -1,6 +1,5 @@
-import { LoggerService } from '@nestjs/common';
-
 import type { Logger } from '@mono/logger/node';
+import { LoggerService } from '@nestjs/common';
 
 /**
  * Adapts our Pino-based Logger to NestJS's LoggerService interface so that

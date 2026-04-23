@@ -1,4 +1,4 @@
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 /**
  * Core users table.
@@ -13,6 +13,7 @@ export const users = pgTable('users', {
     .$defaultFn(() => crypto.randomUUID()),
   email: varchar({ length: 255 }).notNull().unique(),
   name: varchar({ length: 255 }),
+  passwordHash: text(), // nullable — allows OAuth users without passwords
   role: varchar({ length: 50 }).notNull().default('user'),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp({ withTimezone: true })
