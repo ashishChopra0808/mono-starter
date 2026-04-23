@@ -1,6 +1,9 @@
 'use client';
 
+import { AuthUser, Role, ROLES } from '@mono/auth';
+import { AuthProvider, PermissionGate, useAuth } from '@mono/ui-web';
 import { createBrowserLogger } from '@mono/logger';
+
 
 import { useTheme } from '../theme-provider';
 import { useTranslation } from '../i18n';
@@ -36,9 +39,22 @@ import {
   toast,
 } from '@mono/ui-web';
 
+import React, { useState } from 'react';
+
 const logger = createBrowserLogger({ prefix: 'web' });
 
 export default function Index() {
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  return (
+    <AuthProvider user={user}>
+      <IndexContent setUser={setUser} />
+    </AuthProvider>
+  );
+}
+
+function IndexContent({ setUser }: { setUser: (user: AuthUser | null) => void }) {
+  const { user } = useAuth();
   const { theme, setTheme } = useTheme();
   const { t, locale, setLocale, dir, supportedLocales } = useTranslation();
 
@@ -97,6 +113,33 @@ export default function Index() {
                 <DropdownMenuItem onClick={() => setTheme('midnight')}>
                   🌌 Midnight
                 </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Login / Auth Switcher (Mock Auth) */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant={user ? 'default' : 'outline'} size="sm">
+                  {user ? `Logged in: ${user.name}` : 'Sign In'}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Mock Authentication</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {user ? (
+                  <DropdownMenuItem onClick={() => setUser(null)}>
+                    Sign Out
+                  </DropdownMenuItem>
+                ) : (
+                  ROLES.map((role: Role) => (
+                    <DropdownMenuItem 
+                      key={role} 
+                      onClick={() => setUser({ id: 'mock-1', name: `Mock ${role}`, email: 'test@test.com', role })}
+                    >
+                      Login as {role}
+                    </DropdownMenuItem>
+                  ))
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -189,32 +232,50 @@ export default function Index() {
           </div>
         </section>
 
-        {/* ── Form Wrappers ────────────────────────────────────────────── */}
+        {/* ── Form Wrappers (Authenticated Only) ───────────────────────── */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold">{t('web.sections.form')}</h2>
-          <div className="max-w-md space-y-4 rounded-lg border border-border p-6">
-            <FormItem name="full-name">
-              <FormLabel>{t('form.fullName')}</FormLabel>
-              <FormControl>
-                <Input placeholder="John Doe" />
-              </FormControl>
-              <FormDescription>
-                {t('web.formDemo.fullNameHint')}
-              </FormDescription>
-            </FormItem>
+          <h2 className="text-xl font-semibold">Members Area (Authenticated Only)</h2>
+          <PermissionGate 
+            requireAuth
+            fallback={
+              <div className="max-w-md space-y-4 rounded-lg border border-dashed border-border p-8 text-center bg-muted/30">
+                <h3 className="font-medium text-lg">Sign in to book a tour</h3>
+                <p className="text-sm text-foreground-muted mb-4">
+                  This section is protected by PermissionGate. You must be authenticated to view the booking form.
+                </p>
+                <Button variant="outline" onClick={() => setUser({ id: 'mock-1', name: `Mock user`, email: 'test@test.com', role: 'user' })}>
+                  Quick Sign In (User)
+                </Button>
+              </div>
+            }
+          >
+            <div className="max-w-md space-y-4 rounded-lg border border-border p-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-success text-success-foreground text-[10px] uppercase font-bold px-2 py-1 rounded-bl-lg">
+                Authenticated
+              </div>
+              <FormItem name="full-name">
+                <FormLabel>{t('form.fullName')}</FormLabel>
+                <FormControl>
+                  <Input placeholder="John Doe" />
+                </FormControl>
+                <FormDescription>
+                  {t('web.formDemo.fullNameHint')}
+                </FormDescription>
+              </FormItem>
 
-            <FormItem name="phone" error={t('web.formDemo.phoneError')}>
-              <FormLabel>{t('form.phone')}</FormLabel>
-              <FormControl>
-                <Input placeholder={t('web.formDemo.phonePlaceholder')} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+              <FormItem name="phone" error={t('web.formDemo.phoneError')}>
+                <FormLabel>{t('form.phone')}</FormLabel>
+                <FormControl>
+                  <Input placeholder={t('web.formDemo.phonePlaceholder')} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
 
-            <Button type="submit" className="w-full">
-              {t('web.formDemo.submitBooking')}
-            </Button>
-          </div>
+              <Button type="submit" className="w-full">
+                {t('web.formDemo.submitBooking')}
+              </Button>
+            </div>
+          </PermissionGate>
         </section>
 
         {/* ── Dialog ───────────────────────────────────────────────────── */}

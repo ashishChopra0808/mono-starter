@@ -48,10 +48,13 @@
       "path": "../../packages/env"
     },
     {
-      "path": "../../packages/i18n"
+      "path": "../../packages/auth"
     },
     {
       "path": "../../packages/ui-web"
+    },
+    {
+      "path": "../../packages/i18n"
     }
   ]
 }
