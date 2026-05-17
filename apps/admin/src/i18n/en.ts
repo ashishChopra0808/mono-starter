@@ -61,5 +61,15 @@ export const en = {
       cancelled: '{{id}} cancelled',
     },
     adminUser: 'Admin User',
+    profile: {
+      heading: 'Admin Profile',
+      subtitle: 'Your account and system access',
+      systemInfo: 'System Information',
+      roleHierarchy: 'Role Hierarchy',
+      allPermissions: 'All Permissions',
+      accountDetails: 'Account Details',
+      accessControl: 'Access Control',
+      viewProfile: 'View Profile',
+    },
   },
 } as const;

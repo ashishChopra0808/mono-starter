@@ -31,6 +31,9 @@
       "path": "../../packages/env/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/auth/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/ui-mobile/tsconfig.lib.json"
     },
     {

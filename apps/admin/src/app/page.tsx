@@ -2,7 +2,7 @@
 
 import { AuthUser, Permission, Role, ROLES } from '@mono/auth';
 import { AuthProvider, PermissionGate, useAuth } from '@mono/ui-web';
-
+import Link from 'next/link';
 import { useTheme } from '../theme-provider';
 import { useTranslation } from '../i18n';
 import {
@@ -165,7 +165,9 @@ function AdminDashboardContent({ setUser }: { setUser: (user: AuthUser | null) =
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{t('nav.myAccount')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>{t('nav.profile')}</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">{t('admin.profile.viewProfile')}</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>{t('nav.settings')}</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>{t('nav.logout')}</DropdownMenuItem>

@@ -1,4 +1,5 @@
 import type { AuthSession, AuthUser } from '@mono/auth';
+import type { UserProfile } from '@mono/validation';
 import {
   Body,
   Controller,
@@ -71,11 +72,12 @@ export class AuthController {
   /**
    * GET /auth/me
    *
-   * Returns the currently authenticated user's profile.
+   * Returns the currently authenticated user's enriched profile.
+   * Includes computed permissions and account creation timestamp.
    * Requires a valid access token.
    */
   @Get('me')
-  async me(@CurrentUser() user: AuthUser): Promise<{ data: AuthUser }> {
+  async me(@CurrentUser() user: AuthUser): Promise<{ data: UserProfile }> {
     const profile = await this.authService.me(user.id);
     return { data: profile };
   }

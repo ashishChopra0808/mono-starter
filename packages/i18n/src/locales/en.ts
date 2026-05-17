@@ -51,4 +51,17 @@ export const en = {
     en: 'English',
     hi: 'हिन्दी',
   },
+  profile: {
+    title: 'Profile',
+    memberSince: 'Member since',
+    role: 'Role',
+    email: 'Email',
+    id: 'ID',
+    permissions: 'Permissions',
+    noPermissions: 'No permissions assigned',
+    signInToView: 'Sign in to view your profile',
+    signInPrompt: 'Your profile information will appear here once you sign in.',
+    currentBadge: 'current',
+    level: 'Level',
+  },
 } as const;

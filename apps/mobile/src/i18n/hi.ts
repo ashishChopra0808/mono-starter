@@ -41,5 +41,15 @@ export const hi = {
         'जब आप कोई आरक्षण करेंगे तो आपकी आगामी यात्राएँ यहाँ दिखाई देंगी।',
     },
     cycleTheme: 'थीम बदलें ({{theme}})',
+    profile: {
+      sectionTitle: 'प्रोफ़ाइल',
+      greeting: 'नमस्ते, {{name}}!',
+      roleLabel: 'भूमिका',
+      emailLabel: 'ईमेल',
+      permissionsCount: '{{count}} अनुमतियाँ',
+      viewAll: 'सभी अनुमतियाँ देखें',
+      notSignedIn: 'साइन इन नहीं हैं',
+      tapToSignIn: 'मॉक अकाउंट से साइन इन करने के लिए टैप करें',
+    },
   },
 } as const;

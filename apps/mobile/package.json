@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@expo/metro-config": "*",
+    "@mono/auth": "workspace:*",
     "@mono/design-tokens": "workspace:*",
     "@mono/i18n": "workspace:*",
     "@mono/logger": "workspace:*",

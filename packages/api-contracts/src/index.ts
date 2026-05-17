@@ -27,3 +27,7 @@ export type {
 export { authResponseSchemas } from './auth.contract.js';
 
 export type { AuthContract } from './auth.contract.js';
+
+export { userProfileContract } from './user-profile.contract.js';
+
+export type { UserProfileResponse } from './user-profile.contract.js';

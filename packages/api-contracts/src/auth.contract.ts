@@ -1,9 +1,9 @@
 import type {
   AuthSession,
-  AuthUser,
   RefreshRequest,
   SignInRequest,
 } from '@mono/auth';
+import type { UserProfile } from '@mono/validation';
 
 import { successResponseSchema } from './common.js';
 
@@ -36,11 +36,16 @@ export interface AuthContract {
     response: void;
   };
 
-  /** GET /auth/me — Get current user profile. Requires Bearer token. */
+  /**
+   * GET /auth/me — Get current user's enriched profile. Requires Bearer token.
+   *
+   * For the runtime-validated Zod contract, see `userProfileContract.me` in
+   * `./user-profile.contract.ts`. This interface entry is the static-type view.
+   */
   me: {
     method: 'GET';
     path: '/auth/me';
-    response: { data: AuthUser };
+    response: { data: UserProfile };
   };
 }
 
