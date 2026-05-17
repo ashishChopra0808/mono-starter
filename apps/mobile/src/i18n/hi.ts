@@ -50,6 +50,13 @@ export const hi = {
       viewAll: 'सभी अनुमतियाँ देखें',
       notSignedIn: 'साइन इन नहीं हैं',
       tapToSignIn: 'मॉक अकाउंट से साइन इन करने के लिए टैप करें',
+      liveFromApi: 'API से लाइव',
+      loadFromApi: 'API से लोड करें',
+      reload: 'पुनः लोड',
+      loading: 'लोड हो रहा है…',
+      apiSuccess: 'API ने प्रोफ़ाइल लौटाई।',
+      apiErrorPrefix: 'API त्रुटि',
+      apiNotLoaded: 'अभी लोड नहीं हुआ — /auth/me कॉल करने के लिए टैप करें।',
     },
   },
 } as const;

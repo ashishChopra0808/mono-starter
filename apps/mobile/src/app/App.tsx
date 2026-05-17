@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createBrowserLogger } from '@mono/logger';
 import { getPermissions, type AuthUser, Role } from '@mono/auth';
+import { useCurrentUserProfile } from '@mono/api-client/react';
 import {
   ThemeProvider,
   useTheme,
@@ -15,6 +16,7 @@ import {
   nativeFontSize,
 } from '@mono/ui-mobile';
 import { I18nProvider, useTranslation } from '../i18n';
+import { apiClient } from '../lib/api-client';
 
 const logger = createBrowserLogger({ prefix: 'mobile' });
 
@@ -72,6 +74,7 @@ function DemoContent() {
         <Text style={[demoStyles.sectionTitle, { color: colors.foreground }]}>
           {t('mobile.profile.sectionTitle')}
         </Text>
+        <LiveProfileCard />
         {mockUser ? (
           <Card variant="elevated">
             <View style={profileStyles.header}>
@@ -288,6 +291,66 @@ function DemoContent() {
 
       <View style={{ height: sp('10') }} />
     </Screen>
+  );
+}
+
+function LiveProfileCard() {
+  const { colors } = useTheme();
+  const { t } = useTranslation();
+  const { data, error, loading, refetch } = useCurrentUserProfile(apiClient, {
+    enabled: false,
+  });
+  const hasResult = data !== null || error !== null;
+
+  return (
+    <Card variant="outlined">
+      <Text style={[profileStyles.name, { color: colors.foreground }]}>
+        {t('mobile.profile.liveFromApi')}
+      </Text>
+      <View style={{ height: sp('2') }} />
+      <Button variant="outline" size="sm" onPress={refetch} disabled={loading}>
+        {loading
+          ? t('mobile.profile.loading')
+          : data
+            ? t('mobile.profile.reload')
+            : t('mobile.profile.loadFromApi')}
+      </Button>
+      {!hasResult && !loading && (
+        <>
+          <View style={{ height: sp('2') }} />
+          <Text style={{ color: colors['foreground-muted'], fontSize: nativeFontSize.sm }}>
+            {t('mobile.profile.apiNotLoaded')}
+          </Text>
+        </>
+      )}
+      {error && (
+        <>
+          <View style={{ height: sp('2') }} />
+          <Text style={{ color: colors.destructive, fontSize: nativeFontSize.sm, fontWeight: '600' }}>
+            {t('mobile.profile.apiErrorPrefix')}: {error.code} ({error.status || 'n/a'})
+          </Text>
+          <Text style={{ color: colors['foreground-muted'], fontSize: nativeFontSize.xs }}>
+            {error.message}
+          </Text>
+          {error.requestId && (
+            <Text style={{ color: colors['foreground-muted'], fontSize: nativeFontSize.xs, fontFamily: 'monospace' }}>
+              x-request-id: {error.requestId}
+            </Text>
+          )}
+        </>
+      )}
+      {data && (
+        <>
+          <View style={{ height: sp('2') }} />
+          <Text style={{ color: colors.foreground, fontSize: nativeFontSize.sm, fontWeight: '600' }}>
+            {t('mobile.profile.apiSuccess')}
+          </Text>
+          <Text style={{ color: colors['foreground-muted'], fontSize: nativeFontSize.xs }}>
+            {data.email} — {data.role} — {data.permissions.length} perms
+          </Text>
+        </>
+      )}
+    </Card>
   );
 }
 

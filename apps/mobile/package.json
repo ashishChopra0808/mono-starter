@@ -23,11 +23,13 @@
   },
   "dependencies": {
     "@expo/metro-config": "*",
+    "@mono/api-client": "workspace:*",
     "@mono/auth": "workspace:*",
     "@mono/design-tokens": "workspace:*",
     "@mono/i18n": "workspace:*",
     "@mono/logger": "workspace:*",
     "@mono/ui-mobile": "workspace:*",
+    "@mono/validation": "workspace:*",
     "@testing-library/react-native": "*",
     "expo": "*",
     "expo-splash-screen": "*",

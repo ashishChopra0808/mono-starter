@@ -56,6 +56,9 @@
     },
     {
       "path": "./packages/env"
+    },
+    {
+      "path": "./packages/api-client"
     }
   ]
 }

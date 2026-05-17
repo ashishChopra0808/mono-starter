@@ -1,12 +1,15 @@
 'use client';
 
 import { AuthUser, getPermissions, Role, ROLES } from '@mono/auth';
+import { type ApiError } from '@mono/api-client';
+import { useCurrentUserProfile } from '@mono/api-client/react';
 import { AuthProvider, PermissionGate, useAuth } from '@mono/ui-web';
 import { createBrowserLogger } from '@mono/logger';
 import Link from 'next/link';
 
 import { useTheme } from '../../theme-provider';
 import { useTranslation } from '../../i18n';
+import { apiClient } from '../../lib/api-client';
 import {
   Button,
   Card,
@@ -251,10 +254,91 @@ function ProfileContent({ setUser }: { setUser: (user: AuthUser | null) => void 
                   )}
                 </CardContent>
               </Card>
+
+              <LiveProfilePanel />
             </div>
           </div>
         </PermissionGate>
       </main>
+    </div>
+  );
+}
+
+function LiveProfilePanel() {
+  const { t } = useTranslation();
+  // Opt-in fetch — does not run on mount. Demonstrates the api-client surface
+  // alongside the mock-auth flow without breaking the demo.
+  const { data, error, loading, refetch } = useCurrentUserProfile(apiClient, {
+    enabled: false,
+  });
+
+  const hasResult = data !== null || error !== null;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg">{t('web.profile.liveFromApi')}</CardTitle>
+        <CardDescription>{t('web.profile.liveDescription')}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <Button onClick={refetch} disabled={loading} size="sm">
+          {loading
+            ? t('web.profile.loading')
+            : data
+              ? t('web.profile.reload')
+              : t('web.profile.loadFromApi')}
+        </Button>
+
+        {!hasResult && !loading && (
+          <p className="text-sm text-foreground-muted">{t('web.profile.apiNotLoaded')}</p>
+        )}
+
+        {error && <ApiErrorSummary error={error} />}
+        {data && <ApiProfileSummary profile={data} />}
+      </CardContent>
+    </Card>
+  );
+}
+
+function ApiErrorSummary({ error }: { error: ApiError }) {
+  const { t } = useTranslation();
+  return (
+    <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm">
+      <div className="font-semibold text-destructive">
+        {t('web.profile.apiErrorPrefix')}: {error.code} ({error.status || 'n/a'})
+      </div>
+      <div className="text-foreground-muted">{error.message}</div>
+      {error.requestId && (
+        <div className="mt-1 text-xs font-mono text-foreground-muted">
+          x-request-id: {error.requestId}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ApiProfileSummary({
+  profile,
+}: {
+  profile: ReturnType<typeof useCurrentUserProfile>['data'];
+}) {
+  const { t } = useTranslation();
+  if (!profile) return null;
+  return (
+    <div className="rounded-md border border-border bg-muted/30 p-3 text-sm">
+      <div className="mb-2 font-semibold text-success">{t('web.profile.apiSuccess')}</div>
+      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
+        <dt className="text-foreground-muted">id</dt>
+        <dd className="font-mono">{profile.id}</dd>
+        <dt className="text-foreground-muted">email</dt>
+        <dd>{profile.email}</dd>
+        <dt className="text-foreground-muted">role</dt>
+        <dd>{profile.role}</dd>
+        <dt className="text-foreground-muted">permissions</dt>
+        <dd>{profile.permissions.length}</dd>
+        <dt className="text-foreground-muted">createdAt</dt>
+        <dd>{profile.createdAt}</dd>
+      </dl>
     </div>
   );
 }
