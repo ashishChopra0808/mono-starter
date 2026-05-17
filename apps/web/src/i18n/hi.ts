@@ -60,5 +60,12 @@ export const hi = {
       paymentFailed: 'भुगतान विफल। पुनः प्रयास करें।',
       sessionExpiring: 'सत्र 5 मिनट में समाप्त हो रहा है।',
     },
+    profile: {
+      heading: 'मेरी प्रोफ़ाइल',
+      subtitle: 'आपके खाते की जानकारी और एक्सेस लेवल',
+      yourPermissions: 'आपकी अनुमतियाँ',
+      accountInfo: 'खाता जानकारी',
+      viewProfile: 'प्रोफ़ाइल देखें',
+    },
   },
 } as const;

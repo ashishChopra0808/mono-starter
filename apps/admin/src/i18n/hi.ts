@@ -61,5 +61,15 @@ export const hi = {
       cancelled: '{{id}} रद्द किया गया',
     },
     adminUser: 'एडमिन उपयोगकर्ता',
+    profile: {
+      heading: 'एडमिन प्रोफ़ाइल',
+      subtitle: 'आपका खाता और सिस्टम एक्सेस',
+      systemInfo: 'सिस्टम जानकारी',
+      roleHierarchy: 'भूमिका श्रेणी',
+      allPermissions: 'सभी अनुमतियाँ',
+      accountDetails: 'खाता विवरण',
+      accessControl: 'एक्सेस कंट्रोल',
+      viewProfile: 'प्रोफ़ाइल देखें',
+    },
   },
 } as const;

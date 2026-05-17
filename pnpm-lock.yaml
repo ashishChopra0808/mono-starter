@@ -204,6 +204,9 @@ importers:
       '@mono/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@mono/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
       '@mono/ui-web':
         specifier: workspace:*
         version: link:../../packages/ui-web
@@ -325,6 +328,9 @@ importers:
       '@expo/metro-config':
         specifier: '*'
         version: 54.0.14(expo@54.0.33)
+      '@mono/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@mono/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
@@ -630,12 +636,19 @@ importers:
 
   packages/validation:
     dependencies:
+      '@mono/auth':
+        specifier: workspace:*
+        version: link:../auth
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
       zod:
         specifier: ^4.3.6
         version: 4.3.6
+    devDependencies:
+      vitest:
+        specifier: ^4.1.5
+        version: 4.1.5(@types/node@20.19.9)(jsdom@20.0.3)(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@20.19.9)(esbuild@0.27.7)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.98.0)(sass@1.98.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
 packages:
 

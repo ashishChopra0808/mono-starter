@@ -51,4 +51,17 @@ export const hi = {
     en: 'English',
     hi: 'हिन्दी',
   },
+  profile: {
+    title: 'प्रोफ़ाइल',
+    memberSince: 'सदस्य तिथि',
+    role: 'भूमिका',
+    email: 'ईमेल',
+    id: 'आईडी',
+    permissions: 'अनुमतियाँ',
+    noPermissions: 'कोई अनुमति नहीं दी गई',
+    signInToView: 'अपनी प्रोफ़ाइल देखने के लिए साइन इन करें',
+    signInPrompt: 'साइन इन करने के बाद आपकी प्रोफ़ाइल जानकारी यहाँ दिखाई देगी।',
+    currentBadge: 'वर्तमान',
+    level: 'स्तर',
+  },
 } as const;

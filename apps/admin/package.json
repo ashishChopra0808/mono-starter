@@ -22,6 +22,7 @@
   "dependencies": {
     "@mono/auth": "workspace:*",
     "@mono/i18n": "workspace:*",
+    "@mono/logger": "workspace:*",
     "@mono/ui-web": "workspace:*",
     "next": "~16.1.6",
     "react": "^19.0.0",

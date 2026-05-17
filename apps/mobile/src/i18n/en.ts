@@ -41,5 +41,15 @@ export const en = {
         'Your upcoming trips will appear here once you make a reservation.',
     },
     cycleTheme: 'Cycle Theme ({{theme}})',
+    profile: {
+      sectionTitle: 'Profile',
+      greeting: 'Hello, {{name}}!',
+      roleLabel: 'Role',
+      emailLabel: 'Email',
+      permissionsCount: '{{count}} permissions',
+      viewAll: 'View All Permissions',
+      notSignedIn: 'Not signed in',
+      tapToSignIn: 'Tap to sign in with a mock account',
+    },
   },
 } as const;

@@ -60,5 +60,12 @@ export const en = {
       paymentFailed: 'Payment failed. Try again.',
       sessionExpiring: 'Session expiring in 5 minutes.',
     },
+    profile: {
+      heading: 'My Profile',
+      subtitle: 'Your account information and access level',
+      yourPermissions: 'Your Permissions',
+      accountInfo: 'Account Information',
+      viewProfile: 'View Profile',
+    },
   },
 } as const;

@@ -3,7 +3,7 @@
 import { AuthUser, Role, ROLES } from '@mono/auth';
 import { AuthProvider, PermissionGate, useAuth } from '@mono/ui-web';
 import { createBrowserLogger } from '@mono/logger';
-
+import Link from 'next/link';
 
 import { useTheme } from '../theme-provider';
 import { useTranslation } from '../i18n';
@@ -127,9 +127,15 @@ function IndexContent({ setUser }: { setUser: (user: AuthUser | null) => void })
                 <DropdownMenuLabel>Mock Authentication</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {user ? (
-                  <DropdownMenuItem onClick={() => setUser(null)}>
-                    Sign Out
-                  </DropdownMenuItem>
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link href="/profile">{t('web.profile.viewProfile')}</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setUser(null)}>
+                      Sign Out
+                    </DropdownMenuItem>
+                  </>
                 ) : (
                   ROLES.map((role: Role) => (
                     <DropdownMenuItem 

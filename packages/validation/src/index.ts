@@ -20,3 +20,7 @@ export type {
   ProjectStatus,
   UpdateProject,
 } from './project.js';
+
+export { userProfileSchema } from './user-profile.js';
+
+export type { UserProfile } from './user-profile.js';
