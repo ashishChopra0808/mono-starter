@@ -20,10 +20,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mono/api-client": "workspace:*",
     "@mono/auth": "workspace:*",
     "@mono/i18n": "workspace:*",
     "@mono/logger": "workspace:*",
     "@mono/ui-web": "workspace:*",
+    "@mono/validation": "workspace:*",
     "next": "~16.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

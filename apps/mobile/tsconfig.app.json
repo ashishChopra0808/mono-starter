@@ -44,6 +44,12 @@
     },
     {
       "path": "../../packages/design-tokens/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/validation/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/api-client/tsconfig.lib.json"
     }
   ]
 }

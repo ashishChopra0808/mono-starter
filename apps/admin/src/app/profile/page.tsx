@@ -1,12 +1,14 @@
 'use client';
 
 import { AuthUser, getPermissions, PERMISSIONS, Role, ROLES, ROLE_HIERARCHY, hasRole } from '@mono/auth';
+import { useCurrentUserProfile } from '@mono/api-client/react';
 import { AuthProvider, PermissionGate, useAuth } from '@mono/ui-web';
 import { createBrowserLogger } from '@mono/logger';
 import Link from 'next/link';
 
 import { useTheme } from '../../theme-provider';
 import { useTranslation } from '../../i18n';
+import { apiClient } from '../../lib/api-client';
 import {
   Button,
   Card,
@@ -321,6 +323,8 @@ function AdminProfileContent({ setUser }: { setUser: (user: AuthUser | null) => 
                   </div>
                 </CardContent>
               </Card>
+
+              <LiveProfilePanel />
             </div>
           </div>
         </PermissionGate>
@@ -328,3 +332,67 @@ function AdminProfileContent({ setUser }: { setUser: (user: AuthUser | null) => 
     </div>
   );
 }
+
+function LiveProfilePanel() {
+  const { t } = useTranslation();
+  const { data, error, loading, refetch } = useCurrentUserProfile(apiClient, {
+    enabled: false,
+  });
+
+  const hasResult = data !== null || error !== null;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg">{t('admin.profile.liveFromApi')}</CardTitle>
+        <CardDescription>{t('admin.profile.liveDescription')}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <Button onClick={refetch} disabled={loading} size="sm">
+          {loading
+            ? t('admin.profile.loading')
+            : data
+              ? t('admin.profile.reload')
+              : t('admin.profile.loadFromApi')}
+        </Button>
+
+        {!hasResult && !loading && (
+          <p className="text-sm text-foreground-muted">{t('admin.profile.apiNotLoaded')}</p>
+        )}
+
+        {error && (
+          <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm">
+            <div className="font-semibold text-destructive">
+              {t('admin.profile.apiErrorPrefix')}: {error.code} ({error.status || 'n/a'})
+            </div>
+            <div className="text-foreground-muted">{error.message}</div>
+            {error.requestId && (
+              <div className="mt-1 text-xs font-mono text-foreground-muted">
+                x-request-id: {error.requestId}
+              </div>
+            )}
+          </div>
+        )}
+
+        {data && (
+          <div className="rounded-md border border-border bg-muted/30 p-3 text-sm">
+            <div className="mb-2 font-semibold text-success">{t('admin.profile.apiSuccess')}</div>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs">
+              <dt className="text-foreground-muted">id</dt>
+              <dd className="font-mono">{data.id}</dd>
+              <dt className="text-foreground-muted">email</dt>
+              <dd>{data.email}</dd>
+              <dt className="text-foreground-muted">role</dt>
+              <dd>{data.role}</dd>
+              <dt className="text-foreground-muted">permissions</dt>
+              <dd>{data.permissions.length}</dd>
+              <dt className="text-foreground-muted">createdAt</dt>
+              <dd>{data.createdAt}</dd>
+            </dl>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+

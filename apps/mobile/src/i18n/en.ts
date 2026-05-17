@@ -50,6 +50,13 @@ export const en = {
       viewAll: 'View All Permissions',
       notSignedIn: 'Not signed in',
       tapToSignIn: 'Tap to sign in with a mock account',
+      liveFromApi: 'Live from API',
+      loadFromApi: 'Load from API',
+      reload: 'Reload',
+      loading: 'Loading…',
+      apiSuccess: 'API responded with a profile.',
+      apiErrorPrefix: 'API error',
+      apiNotLoaded: 'Not loaded yet — tap the button to call /auth/me.',
     },
   },
 } as const;

@@ -148,10 +148,13 @@ Each app consumes the same shared packages:
 |---|---|
 | `@mono/auth` | `getPermissions(role)` to compute permissions client-side |
 | `@mono/api-contracts` | Type reference for the API response |
+| `@mono/api-client` | `useCurrentUserProfile(apiClient)` — real fetch with typed errors |
 | `@mono/i18n` | Shared `profile.*` translation keys |
 | `@mono/logger` | `createBrowserLogger` for client-side logging |
 | `@mono/ui-web` | `Card`, `Button`, `PermissionGate`, `AuthProvider` |
 | `@mono/ui-mobile` | `Card`, `Button`, `Screen` for RN |
+
+The "Live from API" panel on each profile page demonstrates `@mono/api-client` end-to-end: a button calls `GET /auth/me` through the shared client, surfaces typed `ApiError` / `UnauthorizedError` / `NetworkError`, and shows the `x-request-id` for correlation. See `packages/api-client/README.md` for the client's conventions and how to add new services.
 
 ## How to Add a New Feature
 
@@ -184,14 +187,21 @@ packages/i18n/src/locales/en.ts    (shared keys)
 apps/<app>/src/i18n/en.ts          (app-specific keys)
 ```
 
-### 5. Build the UI
+### 5. Add a Client Service
+```
+packages/api-client/src/services/<feature>.service.ts
+```
+Wrap the endpoint as `get<Feature>(client)` / `create<Feature>(client, input)`, validating the response with the schema from step 1. Re-export from `src/services/index.ts` and `src/index.ts`. Add a React hook in `src/hooks/` only if multiple apps need the same `useState`+`useEffect` glue.
+
+### 6. Build the UI
 ```
 apps/web/src/app/<feature>/page.tsx
 apps/admin/src/app/<feature>/page.tsx
 apps/mobile/src/app/<Feature>Screen.tsx
 ```
+Each app imports its `apiClient` from `src/lib/api-client.ts` and consumes the service/hook from `@mono/api-client`.
 
-### 6. Wire Up Navigation
+### 7. Wire Up Navigation
 Add links/routes from existing pages to the new feature.
 
 ## Key Principles
