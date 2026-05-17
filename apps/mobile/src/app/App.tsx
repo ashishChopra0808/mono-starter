@@ -9,6 +9,7 @@ import {
   Screen,
   Button,
   Card,
+  ErrorBanner,
   TextField,
   LoadingState,
   EmptyState,
@@ -326,17 +327,29 @@ function LiveProfileCard() {
       {error && (
         <>
           <View style={{ height: sp('2') }} />
-          <Text style={{ color: colors.destructive, fontSize: nativeFontSize.sm, fontWeight: '600' }}>
-            {t('mobile.profile.apiErrorPrefix')}: {error.code} ({error.status || 'n/a'})
-          </Text>
-          <Text style={{ color: colors['foreground-muted'], fontSize: nativeFontSize.xs }}>
-            {error.message}
-          </Text>
-          {error.requestId && (
-            <Text style={{ color: colors['foreground-muted'], fontSize: nativeFontSize.xs, fontFamily: 'monospace' }}>
-              x-request-id: {error.requestId}
-            </Text>
-          )}
+          <ErrorBanner
+            error={error}
+            onRetry={refetch}
+            retryLabel={t('errors.retry')}
+            codeMessages={{
+              UNAUTHORIZED: t('errors.UNAUTHORIZED'),
+              FORBIDDEN: t('errors.FORBIDDEN'),
+              NOT_FOUND: t('errors.NOT_FOUND'),
+              VALIDATION_FAILED: t('errors.VALIDATION_FAILED'),
+              INTERNAL_ERROR: t('errors.INTERNAL_ERROR'),
+            }}
+            categoryTitles={{
+              auth: t('errors.titles.auth'),
+              permission: t('errors.titles.permission'),
+              'not-found': t('errors.titles.notFound'),
+              validation: t('errors.titles.validation'),
+              'rate-limit': t('errors.titles.rateLimit'),
+              conflict: t('errors.titles.conflict'),
+              network: t('errors.titles.network'),
+              'response-validation': t('errors.titles.responseValidation'),
+              unexpected: t('errors.titles.unexpected'),
+            }}
+          />
         </>
       )}
       {data && (

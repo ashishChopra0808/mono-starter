@@ -22,6 +22,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  ErrorBanner,
   Toaster,
 } from '@mono/ui-web';
 
@@ -360,19 +361,29 @@ function LiveProfilePanel() {
           <p className="text-sm text-foreground-muted">{t('admin.profile.apiNotLoaded')}</p>
         )}
 
-        {error && (
-          <div className="rounded-md border border-destructive/40 bg-destructive/5 p-3 text-sm">
-            <div className="font-semibold text-destructive">
-              {t('admin.profile.apiErrorPrefix')}: {error.code} ({error.status || 'n/a'})
-            </div>
-            <div className="text-foreground-muted">{error.message}</div>
-            {error.requestId && (
-              <div className="mt-1 text-xs font-mono text-foreground-muted">
-                x-request-id: {error.requestId}
-              </div>
-            )}
-          </div>
-        )}
+        <ErrorBanner
+          error={error}
+          onRetry={refetch}
+          retryLabel={t('errors.retry')}
+          codeMessages={{
+            UNAUTHORIZED: t('errors.UNAUTHORIZED'),
+            FORBIDDEN: t('errors.FORBIDDEN'),
+            NOT_FOUND: t('errors.NOT_FOUND'),
+            VALIDATION_FAILED: t('errors.VALIDATION_FAILED'),
+            INTERNAL_ERROR: t('errors.INTERNAL_ERROR'),
+          }}
+          categoryTitles={{
+            auth: t('errors.titles.auth'),
+            permission: t('errors.titles.permission'),
+            'not-found': t('errors.titles.notFound'),
+            validation: t('errors.titles.validation'),
+            'rate-limit': t('errors.titles.rateLimit'),
+            conflict: t('errors.titles.conflict'),
+            network: t('errors.titles.network'),
+            'response-validation': t('errors.titles.responseValidation'),
+            unexpected: t('errors.titles.unexpected'),
+          }}
+        />
 
         {data && (
           <div className="rounded-md border border-border bg-muted/30 p-3 text-sm">

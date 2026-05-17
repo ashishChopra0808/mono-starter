@@ -612,6 +612,9 @@ importers:
 
   packages/ui-mobile:
     dependencies:
+      '@mono/api-client':
+        specifier: workspace:*
+        version: link:../api-client
       '@mono/design-tokens':
         specifier: workspace:*
         version: link:../design-tokens
@@ -633,6 +636,9 @@ importers:
 
   packages/ui-web:
     dependencies:
+      '@mono/api-client':
+        specifier: workspace:*
+        version: link:../api-client
       '@mono/auth':
         specifier: workspace:*
         version: link:../auth

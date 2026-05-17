@@ -31,3 +31,12 @@ export type { AuthContract } from './auth.contract.js';
 export { userProfileContract } from './user-profile.contract.js';
 
 export type { UserProfileResponse } from './user-profile.contract.js';
+
+export {
+  CODE_BY_HTTP_STATUS,
+  ERROR_CODES,
+  HTTP_STATUS_BY_CODE,
+  isKnownErrorCode,
+} from './error-codes.js';
+
+export type { ErrorCode } from './error-codes.js';

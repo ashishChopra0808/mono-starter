@@ -17,7 +17,7 @@
     }
   },
   "include": ["src/**/*.ts"],
-  "exclude": [],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"],
   "references": [
     {
       "path": "../../packages/validation/tsconfig.lib.json"

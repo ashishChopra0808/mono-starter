@@ -40,27 +40,39 @@ export function successResponseSchema<T extends z.ZodType>(dataSchema: T) {
 }
 
 // ─── Error responses ─────────────────────────────────────────────────────────
+// The wire shape every error response follows. The server sets `requestId` on
+// every response; older responses (pre-PR-17) may omit it, so the schema keeps
+// it optional. See `docs/ERROR-HANDLING.md` for the full taxonomy.
 
 export const apiErrorSchema = z.object({
   error: z.object({
     code: z.string(),
     message: z.string(),
     details: z.unknown().optional(),
+    requestId: z.string().optional(),
   }),
 });
 
 export type ApiError = z.infer<typeof apiErrorSchema>;
 
+/**
+ * One field-level validation problem.
+ *
+ * `path` is a dotted string (e.g. `"address.street"`) that matches the form
+ * field name on the UI. The backend converts Zod's array path before sending.
+ */
 export const validationErrorDetailSchema = z.object({
   path: z.string(),
   message: z.string(),
+  code: z.string().optional(),
 });
 
 export const validationErrorSchema = z.object({
   error: z.object({
-    code: z.literal('VALIDATION_ERROR'),
+    code: z.literal('VALIDATION_FAILED'),
     message: z.string(),
     details: z.array(validationErrorDetailSchema),
+    requestId: z.string().optional(),
   }),
 });
 

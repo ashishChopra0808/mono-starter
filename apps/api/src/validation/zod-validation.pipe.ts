@@ -1,13 +1,15 @@
-import {
-  ArgumentMetadata,
-  BadRequestException,
-  Injectable,
-  PipeTransform,
-} from '@nestjs/common';
+import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import { z } from 'zod';
+
+import { BusinessException } from '../common/exceptions/business.exception';
+import { zodIssuesToDetails } from '../common/filters/global-exception.filter';
 
 /**
  * NestJS pipe that validates input against a Zod schema.
+ *
+ * On failure, throws a `BusinessException` with code `VALIDATION_FAILED` and a
+ * dotted-path `details` array. The global exception filter renders it as a
+ * 422 response with the standard error envelope.
  *
  * Usage:
  *   @Post()
@@ -24,17 +26,10 @@ export class ZodValidationPipe implements PipeTransform {
       return result.data;
     }
 
-    const details = result.error.issues.map((issue) => ({
-      path: issue.path.join('.'),
-      message: issue.message,
-    }));
-
-    throw new BadRequestException({
-      error: {
-        code: 'VALIDATION_ERROR',
-        message: 'Request validation failed',
-        details,
-      },
+    throw new BusinessException({
+      code: 'VALIDATION_FAILED',
+      message: 'Request validation failed',
+      details: zodIssuesToDetails(result.error),
     });
   }
 }

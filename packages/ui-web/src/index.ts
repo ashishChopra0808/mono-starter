@@ -10,6 +10,7 @@ export { cn } from './lib/utils';
 
 // Components
 export { Button, buttonVariants, type ButtonProps } from './components/button';
+export { ErrorBanner, type ErrorBannerProps } from './components/error-banner';
 export { Input, type InputProps } from './components/input';
 export { Label } from './components/label';
 export {

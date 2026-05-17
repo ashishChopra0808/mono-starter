@@ -23,6 +23,8 @@ export {
 // Components
 export type { ButtonProps, ButtonSize,ButtonVariant } from './components/Button';
 export { Button } from './components/Button';
+export type { ErrorBannerProps } from './components/ErrorBanner';
+export { ErrorBanner } from './components/ErrorBanner';
 export type { CardProps, CardVariant } from './components/Card';
 export { Card } from './components/Card';
 export type { EmptyStateAction,EmptyStateProps } from './components/EmptyState';
