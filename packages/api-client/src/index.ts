@@ -26,3 +26,12 @@ export type { ApiErrorBody, ApiErrorKind } from './errors.js';
 export { generateRequestId } from './correlation.js';
 
 export { getCurrentUserProfile } from './services/index.js';
+
+export {
+  categorizeError,
+  getFieldErrors,
+  getUserMessage,
+  logError,
+  type ErrorCategory,
+  type UserMessageOptions,
+} from './format.js';
